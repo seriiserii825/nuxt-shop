@@ -2,24 +2,17 @@
   .navigation
     .navigation__wrap
       .navigation__logo
-        nuxt-link(:to="localePath('/')")
+        nuxt-link(to="/")
           Logo
       .navigation__menu(:class="{'active': menuMobileActive}")
         AppMenu(@close-menu="closeMenu")
       .navigation__sandwitch
         Sandwitch(@click.native="toggleSandwich" :active="sandwichActive")
-      .navigation__right
-        .navigation__lang
-          Language
-        .navigation__login
-          Login
 </template>
 
 <script>
 import Logo from "~/assets/i/svg/logo.svg?inline";
 import AppMenu from "./AppMenu";
-import Login from "./Login";
-import Language from "./Language";
 import Sandwitch from "./Sandwitch";
 
 export default {
@@ -41,11 +34,9 @@ export default {
   },
   components: {
     Sandwitch,
-    Language,
-    Login,
     AppMenu,
     Logo
-  },
+  }
 }
 </script>
 

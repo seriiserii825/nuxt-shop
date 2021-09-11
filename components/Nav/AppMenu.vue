@@ -1,18 +1,7 @@
 <template lang="pug">
   ul.main-menu
     li
-      nuxt-link(:to="localePath('/')" @click.native="closeMenu" @mouseenter.native="setMegaMenu('')") {{ $t('pages.home') }}
-    li(@click="closeMenu" @mouseenter="setMegaMenu('web')") {{ $t('pages.webAndDigital') }}
-    li(@click="closeMenu"  @mouseenter="setMegaMenu('outsourcing')") {{ $t('pages.outsourcing') }}
-    li
-      nuxt-link(:to="localePath('/chi-siamo')" @click.native="closeMenu" @mouseenter.native="setMegaMenu('')") {{ $t('pages.about') }}
-    li
-      nuxt-link(:to="localePath('/portfolio')" @click.native="closeMenu" @mouseenter.native="setMegaMenu('')") {{ $t('pages.portfolio') }}
-    li
-      nuxt-link(:to="localePath('/clienti')" @click.native="closeMenu" @mouseenter.native="setMegaMenu('')") {{ $t('pages.clients') }}
-    li
-      nuxt-link(:to="localePath('/contatti')" @click.native="closeMenu" @mouseenter.native="setMegaMenu('')") {{ $t('pages.contacts') }}
-
+      nuxt-link(to="/" @click.native="closeMenu") Home
 </template>
 <script>
 export default {
@@ -25,12 +14,6 @@ export default {
     closeMenu() {
       this.$emit('close-menu')
     },
-    setMegaMenu(value) {
-      this.$store.dispatch('mega-menu/setMegaMenu', '');
-      setTimeout(() => {
-        this.$store.dispatch('mega-menu/setMegaMenu', value);
-      }, 100)
-    }
   }
 }
 </script>

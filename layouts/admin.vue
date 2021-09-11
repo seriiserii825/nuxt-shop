@@ -6,7 +6,6 @@
       .navigation
         nuxt-link(to="/admin/media/add-media" class="btn green") Add media
         nuxt-link(to="/admin/media" class="btn") List media
-        Language
         a(class="logout" href="#" @click.prevent="logout")
           i.el-icon-platform-eleme
       .content
@@ -14,12 +13,10 @@
 </template>
 <script>
 import Sidebar from "@/components/admin/Sidebar.vue";
-import Language from "../components/Nav/Language";
 
 export default {
   middleware: "auth",
   components: {
-    Language,
     Sidebar
   },
   methods: {

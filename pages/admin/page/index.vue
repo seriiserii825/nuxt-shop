@@ -3,10 +3,10 @@
     el-table(:data='pages' :row-class-name="tableRowClassName")
       el-table-column(label='Title' width="150")
         template(slot-scope='scope')
-          strong(style='margin-left: 10px') {{ scope.row['title'+getLocale] }}
+          strong(style='margin-left: 10px') {{ scope.row['title'] }}
       el-table-column(label='Slug')
         template(slot-scope='scope')
-          span(style='margin-left: 10px') {{ scope.row['slug'+getLocale] }}
+          span(style='margin-left: 10px') {{ scope.row['slug'] }}
       el-table-column(label='Created at')
         template(slot-scope='scope')
           strong(style='margin-left: 10px') {{ new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false }).format(new Date(scope.row.createdDate)) }}
@@ -65,11 +65,6 @@ export default {
           message: 'Delete canceled'
         });
       });
-    }
-  },
-  computed: {
-    getLocale() {
-      return "_" + this.$i18n.locale;
     }
   },
   mounted() {

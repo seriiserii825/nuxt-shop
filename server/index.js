@@ -6,8 +6,6 @@ const cookieParser = require("cookie-parser");
 const app = express();
 const emailRouter = require("./routes/email");
 const authRouter = require("./routes/auth.routes");
-const tipoRouter = require("./routes/tipo.routes");
-const solutionRouter = require("./routes/solution.routes");
 const pageRouter = require("./routes/page.routes");
 const mediaRouter = require("./routes/media.routes");
 
@@ -19,8 +17,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use("/", emailRouter);
 app.use("/", authRouter);
-app.use("/api/v1/tipo/", tipoRouter);
-app.use("/api/v1/solution/", solutionRouter);
 app.use("/api/v1/page/", pageRouter);
 app.use("/api/v1/media", mediaRouter);
 

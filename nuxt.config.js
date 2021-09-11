@@ -1,6 +1,5 @@
 export default {
   env: {
-    WP_URL: "https://cdn2.bludelego.it",
     baseUrl: process.env.BASE_URL
   },
   server: {
@@ -9,9 +8,9 @@ export default {
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: "bludelego",
+    title: "Shop",
     htmlAttrs: {
-      lang: "it"
+      lang: "en"
     },
     meta: [
       { charset: "utf-8" },
@@ -49,54 +48,6 @@ export default {
     '@tui-nuxt/editor',
     "@nuxtjs/auth-next",
     '@nuxt/image',
-    [
-      "nuxt-i18n",
-      {
-        detectBrowserLanguage: {
-          useCookie: true,
-          cookieKey: "i18n_redirected",
-          onlyOnRoot: true, // recommended
-          alwaysRedirect: false,
-          fallbackLocale: "en"
-        },
-        locales: [
-          {
-            name: "Italiano",
-            code: "it",
-            iso: "it-IT",
-            file: "it-IT.js"
-          },
-          {
-            name: "English",
-            code: "en",
-            iso: "en-US",
-            file: "en-US.js"
-          }
-        ],
-        parsePages: false, // Disable babel parsing
-        pages: {
-          ["clienti"]: {
-            it: "/clienti", // -> accessible at /about-us (no prefix since it's the default locale)
-            en: "/clients" // -> accessible at /about-us (no prefix since it's the default locale)
-          },
-          ["contatti"]: {
-            it: "/contatti", // -> accessible at /about-us (no prefix since it's the default locale)
-            en: "/contacts" // -> accessible at /about-us (no prefix since it's the default locale)
-          },
-          ["chi-siamo"]: {
-            it: "/chi-siamo", // -> accessible at /about-us (no prefix since it's the default locale)
-            en: "/about-us" // -> accessible at /about-us (no prefix since it's the default locale)
-          },
-          ["web-e-digital"]: {
-            it: "/web-e-digital", // -> accessible at /about-us (no prefix since it's the default locale)
-            en: "/web-and-digital" // -> accessible at /about-us (no prefix since it's the default locale)
-          }
-        },
-        lazy: true,
-        langDir: "lang/",
-        defaultLocale: "it"
-      }
-    ]
   ],
   tui: {
     editor: {
