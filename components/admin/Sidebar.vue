@@ -26,7 +26,8 @@
 <style lang="scss">
 @import "assets/scss/partials/variables";
 .el-menu {
-  background-color: #545c64;
+  padding: 1rem;
+  background-color: #414448;
 }
 .el-submenu {
   margin-bottom: 0.5rem;
@@ -35,19 +36,19 @@
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
   &.is-opened {
     .el-submenu__title {
-      background-color: darken(#545c64, 15%) !important;
+      background-color: #035494 !important;
     }
     .el-menu-item {
       background-color: darken(#545c64, 20%) !important;
       &.is-active {
-        background-color: darken(#545c64, 30%) !important;
+        background-color: #968c1b !important;
       }
     }
   }
 }
 .el-submenu__title {
   color: white;
-  background-color: #454e52;
+  background-color: #5a6367;
 }
 .el-menu-item:hover,
 .el-submenu__title:hover {
@@ -58,10 +59,11 @@
   background-color: darken(#545c64, 10%) !important;
 }
 .el-submenu .el-menu-item {
+  margin-bottom: 0.5rem;
   background-color: #454e52;
 }
 .el-menu-item {
   color: white;
-  background-color: #3d4349;
+  background-color: #6a737b;
 }
 </style>
