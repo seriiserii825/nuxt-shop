@@ -17,7 +17,6 @@
 
 import Navigation from "../components/Nav/Navigation";
 import Footer from "../components/Nav/Footer";
-import MegaMenu from "../components/Nav/MegaMenu";
 import Popup from "../components/Popup";
 import HeaderPopup from "../components/HeaderPopup";
 
@@ -38,7 +37,7 @@ export default {
       meta: [{ hid: "og:url", property: "og:url", content: `${process.env.baseUrl}${this.$route.path}` }],
     }
   },
-  components: { HeaderPopup, MegaMenu, Footer, Navigation, Popup },
+  components: { HeaderPopup, Footer, Navigation, Popup },
   computed: {
     getOutsourcingSolutions() {
       return this.$store.getters['solutions/getOutsourcingSolutions'];

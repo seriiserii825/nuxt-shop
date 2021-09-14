@@ -1,0 +1,31 @@
+.main-menu {
+  display: flex;
+  @media screen and (max-width: 1420px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  li,
+  a {
+    display: block;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: white;
+  }
+  li {
+    padding: 2.6rem 2.7rem;
+    @media screen and (max-width: 1420px) {
+      width: 100%;
+    }
+  }
+  a {
+    @media screen and (max-width: 1420px) {
+      width: 100%;
+      border-bottom: 1px solid rgba($accent, .3);
+    }
+    &.nuxt-link-exact-active {
+      color: $accent;
+    }
+  }
+}
