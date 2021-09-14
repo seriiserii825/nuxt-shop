@@ -175,3 +175,9 @@ a {
     border-bottom: 1px solid #ccc;
   }
 }
+.el-form-item.vertical {
+  label {
+    float: none;
+    text-align: left;
+  }
+}

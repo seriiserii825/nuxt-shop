@@ -1,9 +1,12 @@
 <template lang="pug">
   .table
     el-table(:data='records' :row-class-name="tableRowClassName")
-      el-table-column(label='Title' width="150")
+      el-table-column(label='Title' width="350")
         template(slot-scope='scope')
           strong(style='margin-left: 10px') {{ scope.row.title }}
+      el-table-column(label='Image' width="150")
+        template(slot-scope='scope')
+          img(:src="`/uploads/${scope.row.image}`" :width="100" alt="some")
       el-table-column(label='Slug')
         template(slot-scope='scope')
           span(style='margin-left: 10px') {{ scope.row.slug }}
@@ -31,7 +34,7 @@ export default {
   },
   methods: {
     tableRowClassName({ row, rowIndex }) {
-      if (row.title_it === this.$route.query.title) {
+      if (row.slug === this.$route.query.slug) {
         return "active-row";
       }
       return "";

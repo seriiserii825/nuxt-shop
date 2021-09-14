@@ -7,6 +7,21 @@
           el-input(v-model='ruleForm.title' @change="createSlug(ruleForm.title, 'slug')")
         el-form-item(label='Slug' prop='slug')
           el-input(v-model='slug')
+      .el-form__flex
+        el-form-item(label='Description' prop='description')
+          el-input(v-model='description')
+        el-form-item(label='Price' prop='price')
+          el-input(v-model='price' type="number")
+      .el-form__flex
+        el-form-item(label='Count in stock' prop='countInStock')
+          el-input(v-model='countInStock' type="number")
+        el-form-item(label='Rating' prop='rating')
+          el-input(v-model='rating' type="number")
+      .el-form__flex
+        el-form-item(label='Num reviews' prop='numReviews')
+          el-input(v-model='numReviews' type="number")
+        el-form-item(v-if="categories.length" label='Category' prop='category' class="vertical")
+          el-radio(v-for="item in categories" v-model='category', :label="item._id" :key="item._id") {{ item.title }}
 
       .buttons
         el-button(type="success" @click.prevent="() => {showModal = true; file_field_default = 'image'}")
@@ -33,10 +48,9 @@ export default {
     }
   },
   async asyncData({ $axios }) {
-    const { tableData } = await $axios.$get(
-      process.env.baseUrl + "/api/v1/media"
-    );
-    return { tableData };
+    const { tableData } = await $axios.$get(process.env.baseUrl + "/api/v1/media");
+    let categories = await $axios.$get(process.env.baseUrl + "/api/v1/category/");
+    return { tableData, categories: categories.data };
   },
   data() {
     return {
@@ -46,6 +60,12 @@ export default {
       actionUrl: process.env.baseUrl + "/api/v1/product",
       loading: false,
       slug: "",
+      description: "",
+      category: "1",
+      price: "",
+      countInStock: "",
+      rating: "",
+      numReviews: "",
       image: "",
       ruleForm: {
         title: "",
@@ -77,8 +97,15 @@ export default {
           const reqData = {
             title: this.ruleForm.title,
             slug: this.slug,
-            image: this.image
+            image: this.image,
+            description: this.description,
+            category: this.category,
+            price: this.price,
+            countInStock: this.countInStock,
+            rating: this.rating,
+            numReviews: this.numReviews,
           };
+          console.log(reqData, 'reqData');
           this.$axios.$post(this.actionUrl, reqData).then(() => {
             this.ruleForm.title = "";
             this.slug = "";
@@ -103,6 +130,9 @@ export default {
         }
       });
     }
+  },
+  mounted() {
+    this.category = this.categories[0].slug;
   }
 };
 </script>

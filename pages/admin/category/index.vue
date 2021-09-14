@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     tableRowClassName({ row, rowIndex }) {
-      if (row.title_it === this.$route.query.title) {
+      if (row.slug === this.$route.query.slug) {
         return "active-row";
       }
       return "";

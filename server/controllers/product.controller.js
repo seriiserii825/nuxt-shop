@@ -22,6 +22,7 @@ const update = async(req, res) => {
 const fetch = async(req, res) => {
   try {
     const records = await ProductModel.find();
+    records.reverse();
     res.json({ status: "success", records });
   } catch (e) {
     res.json({ status: "fail", message: "Error" });

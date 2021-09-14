@@ -80,7 +80,10 @@ export default {
           this.$axios.$patch(
             process.env.baseUrl + "/api/v1/category/" + this.$route.params.id,
             reqData
-          ).catch(err => {
+          ).then(() => {
+            this.loading = false;
+            this.$router.push(`/admin/category/?slug=${this.slug}`);
+          }).catch(err => {
             if (err.response) {
               console.log(err.response.data.message, 'err.response.data.message');
               this.$message.error(err.response.data.message);
@@ -92,8 +95,6 @@ export default {
             }
           });
 
-          this.loading = false;
-          this.$router.push("/admin/category");
         } else {
           this.loading = false;
           console.log("error submit!!");
