@@ -1,5 +1,5 @@
 <template lang="pug">
-  .login(@click="showHeaderPopup")
+  .login
     LockBtn
 </template>
 

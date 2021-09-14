@@ -8,7 +8,7 @@
       .navigation__sandwitch
         Sandwitch(@click.native="toggleSandwich" :active="sandwichActive")
       .navigation__right
-        .navigation__login
+        n-link(to="/admin").navigation__login
           Login
 </template>
 
@@ -42,5 +42,6 @@ export default {
 }
 </script>
 <style lang="scss">
+@import "@/assets/scss/partials/variables.scss";
 @import "@/assets/scss/blocks/navigation.scss";
 </style>

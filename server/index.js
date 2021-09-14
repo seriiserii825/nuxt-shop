@@ -6,12 +6,9 @@ const cookieParser = require("cookie-parser");
 const app = express();
 const emailRouter = require("./routes/email");
 const authRouter = require("./routes/auth.routes");
-const tipoRouter = require("./routes/tipo.routes");
-const solutionRouter = require("./routes/solution.routes");
-const pageRouter = require("./routes/page.routes");
 const mediaRouter = require("./routes/media.routes");
-const partnerRouter = require("./routes/partner.routes");
-const portfolioRouter = require("./routes/portfolio.routes");
+const productRouter = require("./routes/product.routes");
+const categoryRouter = require("./routes/category.routes");
 
 const PORT = process.env.PORT || 3000;
 
@@ -21,11 +18,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use("/", emailRouter);
 app.use("/", authRouter);
-app.use("/api/v1/tipo/", tipoRouter);
-app.use("/api/v1/solution/", solutionRouter);
-app.use("/api/v1/page/", pageRouter);
-app.use("/api/v1/partner/", partnerRouter);
-app.use("/api/v1/portfolio/", portfolioRouter);
+app.use("/api/v1/product/", productRouter);
+app.use("/api/v1/category/", categoryRouter);
 app.use("/api/v1/media", mediaRouter);
 
 const mongoose = require("mongoose");

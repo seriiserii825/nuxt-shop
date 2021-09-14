@@ -6,7 +6,7 @@ const {
   remove,
   update,
   getById
-} = require("./../controllers/partner-controller");
+} = require("./../controllers/category.controller");
 
 router.post("/", create);
 router.patch("/:id", update);

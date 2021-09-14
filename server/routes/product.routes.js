@@ -6,7 +6,7 @@ const {
   remove,
   update,
   getById
-} = require("./../controllers/page.controller");
+} = require("./../controllers/product.controller");
 const upload = require("./../middleware/upload");
 
 router.post("/", upload.single("image"), create);

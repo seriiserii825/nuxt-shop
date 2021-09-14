@@ -8,10 +8,18 @@
       el-submenu(index="1")
         template(slot="title")
           i.el-icon-location
-          span Pages
-        el-menu-item(index="/admin/page/new-page")
-          span New page
-        el-menu-item(index="/admin/page")
+          span Products
+        el-menu-item(index="/admin/product/new")
+          span New product
+        el-menu-item(index="/admin/product")
+          span List
+      el-submenu(index="2")
+        template(slot="title")
+          i.el-icon-location
+          span Categories
+        el-menu-item(index="/admin/category/new")
+          span New category
+        el-menu-item(index="/admin/category")
           span List
 </template>
 

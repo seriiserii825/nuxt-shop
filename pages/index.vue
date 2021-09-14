@@ -3,7 +3,6 @@
 </template>
 
 <script>
-
 export default {
   async asyncData({ $axios }) {
     return {
@@ -20,8 +19,7 @@ export default {
       }
     ]
   },
-  components: {
-  }
+  components: {}
 };
 </script>
 
