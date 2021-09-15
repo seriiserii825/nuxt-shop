@@ -51,6 +51,7 @@ export default {
     const { tableData } = await $axios.$get(
       process.env.baseUrl + "/api/v1/media"
     );
+    console.log(record, 'record')
     return {
       slug: record.slug,
       id: record._id,
@@ -59,7 +60,7 @@ export default {
       price: record.price,
       countInStock: record.countInStock,
       rating: record.rating,
-      numReviews: record.rating,
+      numReviews: record.numReviews,
       ruleForm: {
         title: record.title,
       },
@@ -104,7 +105,7 @@ export default {
             price: this.price,
             countInStock: this.countInStock,
             rating: this.rating,
-            numReviews: this.rating
+            numReviews: this.numReviews
           };
 
           this.$axios.$patch(

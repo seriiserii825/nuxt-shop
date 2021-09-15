@@ -1,13 +1,18 @@
 <template lang="pug">
   .home
+    .container
+      Products(:products="records")
 </template>
 
 <script>
+import Products from "../components/product/Products";
+
 export default {
   async asyncData({ $axios }) {
-    return {
-      some: ''
-    }
+    const { records } = await $axios.$get(
+      process.env.baseUrl + "/api/v1/product/"
+    );
+    return { records };
   },
   head: {
     title: "Home",
@@ -19,7 +24,7 @@ export default {
       }
     ]
   },
-  components: {}
+  components: { Products }
 };
 </script>
 
