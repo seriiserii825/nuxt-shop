@@ -5,7 +5,7 @@ const {
   fetch,
   remove,
   update,
-  getById
+  getById,
 } = require("./../controllers/product.controller");
 const upload = require("./../middleware/upload");
 

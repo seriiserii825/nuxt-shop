@@ -1,6 +1,6 @@
 <template lang="pug">
   .product
-    n-link.product__image(:to="`/product/${product.slug}`")
+    n-link.product__image(:to="`/product/${product._id}`")
       nuxt-img(:src="`/uploads/${product.image}`" :alt="product.title")
     .product__body
       h2.product__title {{ product.title }}

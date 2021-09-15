@@ -2,6 +2,8 @@
   ul.main-menu
     li
       nuxt-link(to="/") Home
+    li
+      nuxt-link(to="/product") Products
 
 </template>
 <script>
