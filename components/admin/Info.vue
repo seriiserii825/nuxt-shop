@@ -1,5 +1,5 @@
 <template lang="pug">
-  .info
+  .info(:style="`background: ${bg}`")
     .info__content
       .info__data
         .info__number {{ number }}
@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  props: ['number', 'title', 'icon', 'link']
+  props: ['number', 'title', 'icon', 'link', 'bg']
 }
 </script>
 
@@ -22,7 +22,6 @@ export default {
   display: block;
   margin-bottom: 20px;
   color: white;
-  background: #17a2b8;
   border-radius: 0.5rem;
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.13), 0 1px 3px rgba(0, 0, 0, 0.2);
   overflow: hidden;

@@ -1,6 +1,21 @@
-const {Schema, model} = require("mongoose");
+const { Schema, model } = require("mongoose");
 
+const reviewSchema = Schema(
+  {
+    name: { type: String, required: true },
+    rating: { type: Number, required: true },
+    comment: { type: String, required: true }
+  },
+  {
+    timestamp: true
+  }
+);
 const productSchema = new Schema({
+  user: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: "User"
+  },
   title: {
     type: String,
     required: true,
@@ -12,29 +27,32 @@ const productSchema = new Schema({
     unique: true
   },
   description: {
-    type: String,
+    type: String
   },
   brand: {
-    type: String,
+    type: String
   },
   category: {
     type: Schema.Types.ObjectId,
     ref: "Category"
   },
   price: {
-    type: Number,
+    type: Number
   },
   countInStock: {
     type: Number,
+    default: 0
   },
   rating: {
     type: String,
+    default: 0
   },
+  reviews: [reviewSchema],
   numReviews: {
-    type: String,
+    type: String
   },
   image: {
-    type: String,
+    type: String
   },
   createdDate: {
     type: Date,
@@ -45,5 +63,6 @@ const productSchema = new Schema({
     default: Date.now
   }
 });
+
 
 module.exports = model("Product", productSchema);

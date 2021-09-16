@@ -5,6 +5,10 @@
         template(slot="title")
           i.el-icon-school
           span Home
+      el-menu-item(index="/admin")
+        template(slot="title")
+          i.el-icon-school
+          span Home Admin
       el-submenu(index="1")
         template(slot="title")
           i.el-icon-location
@@ -63,6 +67,7 @@
   background-color: #454e52;
 }
 .el-menu-item {
+  margin-bottom: 0.6rem;
   color: white;
   background-color: #6a737b;
 }

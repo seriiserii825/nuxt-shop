@@ -1,5 +1,4 @@
 require("dotenv").config();
-
 // Подключаем бэкенд на Express.
 const express = require("express");
 const cookieParser = require("cookie-parser");
@@ -11,6 +10,8 @@ const productRouter = require("./routes/product.routes");
 const categoryRouter = require("./routes/category.routes");
 
 const PORT = process.env.PORT || 3000;
+
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

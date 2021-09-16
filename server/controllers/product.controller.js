@@ -21,10 +21,17 @@ const update = async(req, res) => {
 
 const fetch = async(req, res) => {
   try {
-    const records = await ProductModel.find();
-    records.reverse();
+    let records;
+    if (req.query.category) {
+      records = await ProductModel.find().populate({ path: 'category', select: 'title' });
+      records.reverse();
+    } else {
+      records = await ProductModel.find();
+      records.reverse();
+    }
     res.json({ status: "success", records });
   } catch (e) {
+    console.log('fetch error'.red)
     res.json({ status: "fail", message: "Error" });
     throw e;
   }
@@ -33,10 +40,10 @@ const fetch = async(req, res) => {
 const getById = async(req, res) => {
   try {
     let record;
-    if (req.category) {
-      record = await ProductModel.findById(req.params.id);
-    } else {
+    if (req.query.category) {
       record = await ProductModel.findById(req.params.id).populate({ path: 'category', select: 'title' });
+    } else {
+      record = await ProductModel.findById(req.params.id);
     }
     return res.status(200).json({ status: "success", record });
   } catch (error) {
