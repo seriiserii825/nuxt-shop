@@ -32,7 +32,12 @@ const fetch = async(req, res) => {
 
 const getById = async(req, res) => {
   try {
-    const record = await ProductModel.findById(req.params.id);
+    let record;
+    if (req.category) {
+      record = await ProductModel.findById(req.params.id);
+    } else {
+      record = await ProductModel.findById(req.params.id).populate({ path: 'category', select: 'title' });
+    }
     return res.status(200).json({ status: "success", record });
   } catch (error) {
     res.status(500).json({ status: "fail", message: error.message });

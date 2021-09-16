@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Products from "../components/product/Products";
+import Products from "../../components/product/Products";
 
 export default {
   async asyncData({ $axios }) {
@@ -15,12 +15,12 @@ export default {
     return { records };
   },
   head: {
-    title: "Home",
+    title: "Products",
     meta: [
       {
         hid: "description",
         name: "description",
-        content: "Content for home page"
+        content: "Content for products page"
       }
     ]
   },

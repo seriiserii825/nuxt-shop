@@ -10,6 +10,8 @@
           li
             Rating(:rating="record.rating" :numReviews="record.numReviews")
           li
+            h4 Category: {{ record.category.title }}
+          li
             h4 Price: <strong>$ {{ record.price }}</strong>
           li {{ record.description }}
           li
@@ -17,8 +19,6 @@
               span.stock.success(v-if="record.countInStock") In Stock
               span.stock.error(v-else) Out of Stock
         el-button(type="primary" :disabled="!record.countInStock") Add to cart
-
-
 </template>
 
 <script>
@@ -27,8 +27,9 @@ import Rating from "../../components/product/Rating";
 export default {
   async asyncData({ $axios, params }) {
     let { record } = await $axios.$get(
-      process.env.baseUrl + "/api/v1/product/" + params.id
+      process.env.baseUrl + "/api/v1/product/" + params.id + '?category=true'
     );
+    console.log(record, 'record');
     // let categories = await $axios.$get(process.env.baseUrl + "/api/v1/category/");
     return {
       record
