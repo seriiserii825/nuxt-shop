@@ -1,17 +1,18 @@
 <template lang="pug">
   .media-grid
-    header.media-grid__header
-      input(type="text" v-model="search_field" @input="searchData" placeholder="Search media...")
-      el-button(@click="close" type="danger") Close
-    .media-grid__wrap
-      .media-grid__item(v-for="{name, id} in result" :key="id" @click="addFile(name)")
-        img(:src="`/uploads/${name}`" width="300")
-        .media-grid__content
-          h4.media-grid__title {{ name }}
-          el-button(class="media-grid__button" type="danger" @click="removeFile(name)") Remove
+    .media-grid__body
+      header.media-grid__header
+        input(type="text" v-model="search_field" @input="searchData" placeholder="Search media...")
+        el-button(@click="close" type="danger") Close
+      .media-grid__wrap
+        MediaGridItem(v-for="mediaItem in result" :mediaItem="mediaItem" :key="mediaItem.id" @addFileClick="addFileToFiles" @removeFileClick="removeFileFromFiles")
+    footer.media-grid__footer
+      el-button(type="success" @click="returnFiles") Add image
 </template>
 
 <script>
+import MediaGridItem from "./MediaGridItem";
+
 export default {
   props: ['file_field'],
   data() {
@@ -19,28 +20,20 @@ export default {
       search: '',
       showOverlay: false,
       search_field: '',
-      result: []
+      result: [],
+      files: []
     }
   },
   methods: {
-    async removeFile(title) {
-      this.$confirm('This will permanently delete the file. Continue?', 'Warning', {
-        confirmButtonText: 'OK',
-        cancelButtonText: 'Cancel',
-        type: 'warning'
-      }).then(async() => {
-        await this.$axios.delete(process.env.baseUrl + '/api/v1/media/' + title);
-        this.$message.success(`File "${title}" was deleted...`);
-        await this.$nuxt.refresh()
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: 'Delete canceled'
-        });
-      });
+    addFileToFiles(value) {
+      this.files.push(value.file);
     },
-    addFile(file) {
-      this.$emit('file_name', { file: file, file_field: this.file_field });
+    removeFileFromFiles(value) {
+      this.files = this.files.filter(item => item !== value.file);
+    },
+    returnFiles() {
+      this.$emit('returnFiles', { files: this.files, file_field: this.file_field })
+      this.$emit('close')
     },
     close() {
       this.$emit('close')
@@ -53,6 +46,9 @@ export default {
     tableData() {
       return this.$store.getters.media.tableData;
     },
+  },
+  components: {
+    MediaGridItem
   },
   mounted() {
     this.result = this.tableData;
@@ -74,6 +70,34 @@ export default {
       text-indent: 2rem;
       border: 1px solid #aaa;
       outline: none;
+    }
+  }
+  .el-checkbox {
+    position: absolute;
+    top: -6px;
+    left: -3px;
+    width: 3rem;
+    height: 3rem;
+    z-index: 100;
+    opacity: 0;
+    &.is-checked {
+      opacity: 1;
+    }
+  }
+  .el-checkbox__inner {
+    border: 1px solid #16c9e7;
+  }
+  &__footer {
+    position: fixed;
+    bottom: 1rem;
+    left: 0;
+    text-align: right;
+    width: 100%;
+    height: 4rem;
+    z-index: 100;
+    .el-button {
+      position: relative;
+      right: 1rem;
     }
   }
 }

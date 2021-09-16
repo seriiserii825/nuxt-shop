@@ -59,6 +59,10 @@ export default {
     };
   },
   methods: {
+    returnFiles({ files, file_field }) {
+      this[file_field] = files[0];
+      console.log(this.image, 'this.image');
+    },
     createSlug(value, prop) {
       let slug = value.toLowerCase();
       slug = slug

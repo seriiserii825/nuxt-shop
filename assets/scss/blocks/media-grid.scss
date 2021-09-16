@@ -8,6 +8,10 @@
     position: relative;
     width: 100%;
     height: 10rem;
+    border: 1px solid transparent;
+    &.active {
+      border-color: #16c9e7;
+    }
     &:hover {
       cursor: pointer;
       &::before {
