@@ -34,6 +34,7 @@
 
     .media-gallery(v-if="showModal" )
       MediaGrid(@close="showModal = false" @returnFiles="returnFiles" :file_field="file_field_default")
+
 </template>
 <script>
 import MediaGrid from "../../../components/admin/MediaGrid";
@@ -83,7 +84,6 @@ export default {
   methods: {
     returnFiles({ files, file_field }) {
       this[file_field] = files[0];
-      console.log(this.image, 'this.image');
     },
     createSlug(value, prop) {
       let slug = value.toLowerCase();

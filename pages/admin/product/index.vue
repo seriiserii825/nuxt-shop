@@ -15,7 +15,8 @@
           strong(style='margin-left: 10px') {{ new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false }).format(new Date(scope.row.createdDate)) }}
       el-table-column(label='Operations')
         template(slot-scope='scope')
-          el-button(size='mini', @click='edit(scope.row._id)') Edit
+          el-button(size='mini' type="success" @click='viewProduct(scope.row._id)') View product
+          el-button(size='mini' type="primary" @click="edit(scope.row._id)") Edit
           el-button(size='mini', type='danger', @click='remove(scope.row._id)') Delete
 </template>
 <script>
@@ -33,6 +34,9 @@ export default {
     };
   },
   methods: {
+    viewProduct(id) {
+      this.$router.push(`/product/${id}`);
+    },
     tableRowClassName({ row, rowIndex }) {
       if (row.slug === this.$route.query.slug) {
         return "active-row";

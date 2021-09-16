@@ -34,12 +34,9 @@ export default {
     },
     addFile(file) {
       this.checked = !this.checked;
-      console.log(this.checked, 'this.checked');
       if (this.checked) {
-        console.log(this.checked, 'this.checked')
         this.$emit('addFileClick', { file: file });
       } else if (this.checked === false) {
-        console.log(this.checked, 'this.checked')
         this.$emit('removeFileClick', { file: file });
       }
     },

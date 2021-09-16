@@ -31,7 +31,7 @@
         el-button(type='primary' :loading="loading" @click="submitForm()") Update
 
     .media-gallery(v-if="showModal" )
-      MediaGrid(@close="showModal = false" @file_name="file_name" :file_field="file_field_default")
+      MediaGrid(@close="showModal = false" @returnFiles="returnFiles" :file_field="file_field_default")
 
 </template>
 <script>
@@ -51,7 +51,6 @@ export default {
     const { tableData } = await $axios.$get(
       process.env.baseUrl + "/api/v1/media"
     );
-    console.log(record, 'record')
     return {
       slug: record.slug,
       id: record._id,
@@ -79,14 +78,13 @@ export default {
     return {
       loading: false,
       actionUrl: process.env.baseUrl + "/api/v1/product",
-      image: null,
+      image: [],
       file_field_default: null
     };
   },
   methods: {
     returnFiles({ files, file_field }) {
       this[file_field] = files[0];
-      console.log(this.image, 'this.image');
     },
     createSlug(value, prop) {
       let slug = value.toLowerCase();
@@ -139,10 +137,6 @@ export default {
   },
   components: {
     MediaGrid
-  },
-  mounted() {
-    console.log(this.category, 'this.category');
-    console.log(this.categories, 'this.categories');
   }
 };
 </script>
