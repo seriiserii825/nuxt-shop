@@ -1,8 +1,7 @@
 <template lang="pug">
   .home
     .container
-      h2(v-if="!records.length") Loading
-      Products(v-else :products="records")
+      Products(:products="products")
 </template>
 
 <script>
@@ -10,12 +9,15 @@ import Products from "../components/product/Products";
 
 export default {
   async asyncData({ $axios }) {
-    const { records } = await $axios.$get(
+    const products = await $axios.$get(
       process.env.baseUrl + "/api/v1/product/"
     );
-    return { records };
+
+    return {
+      products: products.records
+    };
   },
-  data: () => {
+  data() {
     return {
       loading: true
     };

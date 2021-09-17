@@ -8,6 +8,8 @@
       .navigation__sandwitch
         Sandwitch(@click.native="toggleSandwich" :active="sandwichActive")
       .navigation__right
+        n-link(to="/cart").navigation__cart
+          span.el-icon-shopping-cart-2
         n-link(to="/admin").navigation__login
           Login
 </template>

@@ -174,16 +174,19 @@ a {
     border-bottom: 1px solid #ccc;
   }
 }
+
 .el-form-item.vertical {
   label {
     float: none;
     text-align: left;
   }
 }
-
 .error {
   color: darkred;
 }
 .success {
   color: darkgreen;
+}
+.main {
+  min-height: 100vh;
 }

@@ -18,7 +18,10 @@
             h4 Status:
               span.stock.success(v-if="record.countInStock") In Stock
               span.stock.error(v-else) Out of Stock
-        el-button(type="primary" :disabled="!record.countInStock") Add to cart
+
+        el-select.single-product__qty(v-if="record.countInStock" v-model='qtySelected', placeholder='Select')
+          el-option(v-for='(item, index) in qtyItems' :key='item.value' :label='item.label' :value='item.value' )
+        el-button(type="primary" :disabled="!record.countInStock" @click="addToCart") Add to cart
 </template>
 
 <script>
@@ -29,11 +32,59 @@ export default {
     let { record } = await $axios.$get(
       process.env.baseUrl + "/api/v1/product/" + params.id + '?category=true'
     );
-    console.log(record, 'record');
-    // let categories = await $axios.$get(process.env.baseUrl + "/api/v1/category/");
     return {
       record
     };
+  },
+  data() {
+    return {
+      qtySelected: 1,
+      qtyItems: [],
+    }
+  },
+  mounted() {
+    if (this.record.countInStock) {
+      const result = [];
+      for (let i = 1; i <= this.record.countInStock; i++) {
+        result.push({
+          value: i,
+          label: i
+        });
+      }
+      this.qtyItems = result;
+    }
+  },
+  methods: {
+    addToCart() {
+      const product = { id: this.record._id, title: this.record.title, qty: this.qtySelected };
+
+      if (!localStorage.getItem('shop_cart')) {
+        const cart = {
+          userId: new Date().valueOf(),
+          products: []
+        }
+        cart.products.push(product);
+        localStorage.setItem('shop_cart', JSON.stringify(cart));
+      } else {
+        let localStorageCart = JSON.parse(localStorage.getItem('shop_cart'));
+        const idx = localStorageCart.products.find(product => product.id === this.record._id);
+
+        if (idx) {
+          localStorageCart.products = localStorageCart.products.map(product => {
+            if (product.id === this.record._id) {
+              product.qty = this.qtySelected;
+              return product;
+            }
+            return product;
+          });
+
+          localStorage.setItem('shop_cart', JSON.stringify(localStorageCart));
+        } else {
+          localStorageCart.products.push(product);
+          localStorage.setItem('shop_cart', JSON.stringify(localStorageCart));
+        }
+      }
+    }
   },
   components: {
     Rating
@@ -67,6 +118,10 @@ export default {
     &.error {
       color: red;
     }
+  }
+  &__qty {
+    margin-right: 2rem;
+    width: 10rem;
   }
 }
 </style>

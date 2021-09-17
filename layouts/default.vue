@@ -1,20 +1,20 @@
 <template>
   <div>
-    <Navigation/>
+    <Navigation />
     <div class="main">
-      <Nuxt/>
+      <Nuxt />
     </div>
-    <Footer/>
+    <Footer />
     <transition name="fade" mode="out-in">
-      <Popup v-if="popup"/>
+      <Popup v-if="popup" />
     </transition>
     <transition name="fade" mode="out-in">
-      <HeaderPopup v-if="headerPopup"/>
+      <HeaderPopup v-if="headerPopup" />
     </transition>
   </div>
 </template>
-<script>
 
+<script>
 import Navigation from "../components/Nav/Navigation";
 import Footer from "../components/Nav/Footer";
 import Popup from "../components/Popup";
@@ -24,26 +24,34 @@ export default {
   data() {
     return {
       currentMenu: []
-    }
+    };
   },
   head() {
     return {
       bodyAttrs: {
-        class: this.popup ? 'fixed' : ''
+        class: this.popup ? "fixed" : ""
       },
       // Установка rel="canonical" на всех страницах шаблона.
-      link: [{ rel: "canonical", href: `${process.env.baseUrl}${this.$route.path}` }],
+      link: [
+        { rel: "canonical", href: `${process.env.baseUrl}${this.$route.path}` }
+      ],
       // Пример установки общих мета-тегов на страницах.
-      meta: [{ hid: "og:url", property: "og:url", content: `${process.env.baseUrl}${this.$route.path}` }],
-    }
+      meta: [
+        {
+          hid: "og:url",
+          property: "og:url",
+          content: `${process.env.baseUrl}${this.$route.path}`
+        }
+      ]
+    };
   },
   components: { HeaderPopup, Footer, Navigation, Popup },
   computed: {
     getOutsourcingSolutions() {
-      return this.$store.getters['solutions/getOutsourcingSolutions'];
+      return this.$store.getters["solutions/getOutsourcingSolutions"];
     },
     getWebSolutions() {
-      return this.$store.getters['solutions/getWebSolutions'];
+      return this.$store.getters["solutions/getWebSolutions"];
     },
     currentMegaMenu() {
       return this.$store.getters["mega-menu/megaMenu"];
@@ -58,13 +66,13 @@ export default {
   watch: {
     currentMegaMenu(value) {
       switch (value) {
-        case 'web':
+        case "web":
           this.currentMenu = this.getWebSolutions;
           break;
-        case 'outsourcing':
+        case "outsourcing":
           this.currentMenu = this.getOutsourcingSolutions;
           break;
-        case '':
+        case "":
           this.currentMenu = [];
           break;
       }
@@ -72,20 +80,20 @@ export default {
   },
   mounted() {
     if (process.client) {
-      let div = document.createElement('div');
-      div.style.overflowY = 'scroll';
-      div.style.width = '50px';
-      div.style.height = '50px';
+      let div = document.createElement("div");
+      div.style.overflowY = "scroll";
+      div.style.width = "50px";
+      div.style.height = "50px";
       document.body.append(div);
       let scrollWidth = div.offsetWidth - div.clientWidth;
       div.remove();
       // console.log(scrollWidth, 'scrollWidth')
       if (!this.$store.getters["helpers/scrollBarWidth"]) {
-        this.$store.dispatch('helpers/setScrollBarWidth', scrollWidth);
+        this.$store.dispatch("helpers/setScrollBarWidth", scrollWidth);
       }
     }
   }
-}
+};
 </script>
 <style lang="scss">
 .main {
