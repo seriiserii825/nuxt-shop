@@ -35,10 +35,8 @@ const fetch = async (req, res) => {
       records.reverse();
     }
     res.json({ status: "success", records });
-  } catch (e) {
-    console.log("fetch error".red);
-    res.json({ status: "fail", message: "Error" });
-    throw e;
+  } catch (error) {
+    res.status(500).json({ status: "fail", message: error.message });
   }
 };
 

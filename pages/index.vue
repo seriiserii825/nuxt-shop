@@ -1,7 +1,8 @@
 <template lang="pug">
   .home
     .container
-      Products(:products="records")
+      h2(v-if="!records.length") Loading
+      Products(v-else :products="records")
 </template>
 
 <script>
@@ -13,6 +14,11 @@ export default {
       process.env.baseUrl + "/api/v1/product/"
     );
     return { records };
+  },
+  data: () => {
+    return {
+      loading: true
+    };
   },
   head: {
     title: "Home",
