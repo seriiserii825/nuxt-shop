@@ -51,38 +51,42 @@ export default {
       this.$router.push("/admin/product/update/" + id);
     },
     async remove(id) {
-      this.$confirm('This will permanently delete this page. Continue?', 'Warning', {
-        confirmButtonText: 'OK',
-        cancelButtonText: 'Cancel',
-        type: 'warning'
-      }).then(async() => {
-        try {
-          const page = await this.$axios.delete(
-            process.env.baseUrl + "/api/v1/product/" + id
-          );
-          if (page) {
-            this.$message.success("Post was deleted");
-
-            await this.$nuxt.refresh();
-          } else {
-            this.$message.error("Some error");
-          }
-        } catch (e) {
-          console.log(e, "e");
+      this.$confirm(
+        "This will permanently delete this page. Continue?",
+        "Warning",
+        {
+          confirmButtonText: "OK",
+          cancelButtonText: "Cancel",
+          type: "warning"
         }
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: 'Delete canceled'
+      )
+        .then(async () => {
+          try {
+            const page = await this.$axios.delete(
+              process.env.baseUrl + "/api/v1/product/" + id
+            );
+            if (page) {
+              this.$message.success("Post was deleted");
+
+              await this.$nuxt.refresh();
+            } else {
+              this.$message.error("Some error");
+            }
+          } catch (e) {
+            console.log(e, "e");
+          }
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "Delete canceled"
+          });
         });
-      });
     }
   },
   mounted() {
     if (this.$route.query.message && this.$route.query.message === "update") {
-      this.$message.success(
-        `Page "${this.$route.query.title}" was updated...`
-      );
+      this.$message.success(`Page "${this.$route.query.title}" was updated...`);
       this.updateTitle = this.$route.query.title;
     }
   }

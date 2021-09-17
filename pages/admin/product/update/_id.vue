@@ -1,37 +1,41 @@
 <template lang="pug">
   .admin-main
     h2 Update page
-    el-form.demo-ruleForm.admin-form(:model='ruleForm', :rules='rules', ref='ruleForm')
-      .el-form__flex
-        el-form-item(label='Title' prop='title')
-          el-input(v-model='ruleForm.title' @change="createSlug(ruleForm.title, 'slug')")
-        el-form-item(label='Slug' prop='slug')
-          el-input(v-model='slug')
-      .el-form__flex
-        el-form-item(label='Description' prop='description')
-          el-input(v-model='description')
-        el-form-item(label='Price' prop='price')
-          el-input(v-model='price' type="number")
-      .el-form__flex
-        el-form-item(label='Count in stock' prop='countInStock')
-          el-input(v-model='countInStock' type="number")
-        el-form-item(label='Rating' prop='rating')
-          el-input(v-model='rating' type="number")
-      .el-form__flex
-        el-form-item(label='Num reviews' prop='numReviews')
-          el-input(v-model='numReviews' type="number")
-        el-form-item(v-if="categories.length" label='Category' prop='category' class="vertical")
-          el-radio(v-for="item in categories" v-model='category', :label="item._id" :key="item._id") {{ item.title }}
+    .admin-flex
+      .admin-flex__image
+        nuxt-img(:src="`/uploads/${image}`")
+      .admin-flex__content
+        el-form.demo-ruleForm.admin-form(:model='ruleForm', :rules='rules', ref='ruleForm')
+          .el-form__flex
+            el-form-item(label='Title' prop='title')
+              el-input(v-model='ruleForm.title' @change="createSlug(ruleForm.title, 'slug')")
+            el-form-item(label='Slug' prop='slug')
+              el-input(v-model='slug')
+          .el-form__flex
+            el-form-item(label='Description' prop='description')
+              el-input(v-model='description')
+            el-form-item(label='Price' prop='price')
+              el-input(v-model='price' type="number")
+          .el-form__flex
+            el-form-item(label='Count in stock' prop='countInStock')
+              el-input(v-model='countInStock' type="number")
+            el-form-item(label='Rating' prop='rating')
+              el-input(v-model='rating' type="number")
+          .el-form__flex
+            el-form-item(label='Num reviews' prop='numReviews')
+              el-input(v-model='numReviews' type="number")
+            el-form-item(v-if="categories.length" label='Category' prop='category' class="vertical")
+              el-radio(v-for="item in categories" v-model='category', :label="item._id" :key="item._id") {{ item.title }}
 
-      .buttons
-        el-button(type="success" @click.prevent="() => {showModal = true; file_field_default = 'image'}")
-          span(v-if="!image") Select file from media gallery
-          span(v-else) {{ image }}
-      el-form-item
-        el-button(type='primary' :loading="loading" @click="submitForm()") Update
+          .buttons
+            el-button(type="success" @click.prevent="() => {showModal = true; file_field_default = 'image'}")
+              span(v-if="!image") Select file from media gallery
+              span(v-else) {{ image }}
+          el-form-item
+            el-button(type='primary' :loading="loading" @click="submitForm()") Update
 
-    .media-gallery(v-if="showModal" )
-      MediaGrid(@close="showModal = false" @returnFiles="returnFiles" :file_field="file_field_default")
+        .media-gallery(v-if="showModal" )
+          MediaGrid(@close="showModal = false" @returnFiles="returnFiles" :file_field="file_field_default")
 
 </template>
 <script>
@@ -46,7 +50,9 @@ export default {
       process.env.baseUrl + "/api/v1/product/" + params.id
     );
 
-    let categories = await $axios.$get(process.env.baseUrl + "/api/v1/category/");
+    let categories = await $axios.$get(
+      process.env.baseUrl + "/api/v1/category/"
+    );
 
     const { tableData } = await $axios.$get(
       process.env.baseUrl + "/api/v1/media"
@@ -61,7 +67,7 @@ export default {
       rating: record.rating,
       numReviews: record.numReviews,
       ruleForm: {
-        title: record.title,
+        title: record.title
       },
       rules: {
         title: [
@@ -110,23 +116,29 @@ export default {
             numReviews: this.numReviews
           };
 
-          this.$axios.$patch(
-            process.env.baseUrl + "/api/v1/product/" + this.$route.params.id,
-            reqData
-          ).then(() => {
-            this.loading = false;
-            this.$router.push(`/admin/product/?slug=${this.slug}`);
-          }).catch(err => {
-            if (err.response) {
-              console.log(err.response.data.message, 'err.response.data.message');
-              this.$message.error(err.response.data.message);
+          this.$axios
+            .$patch(
+              process.env.baseUrl + "/api/v1/product/" + this.$route.params.id,
+              reqData
+            )
+            .then(() => {
               this.loading = false;
-            } else if (err.request) {
-              this.$message.error(err.request);
-              console.log(err.request, 'err.request')
-              this.loading = false;
-            }
-          });
+              this.$router.push(`/admin/product/?slug=${this.slug}`);
+            })
+            .catch(err => {
+              if (err.response) {
+                console.log(
+                  err.response.data.message,
+                  "err.response.data.message"
+                );
+                this.$message.error(err.response.data.message);
+                this.loading = false;
+              } else if (err.request) {
+                this.$message.error(err.request);
+                console.log(err.request, "err.request");
+                this.loading = false;
+              }
+            });
         } else {
           this.loading = false;
           console.log("error submit!!");

@@ -1,0 +1,12 @@
+.admin-flex {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+  align-items: flex-start;
+  &__image {
+    width: 20%;
+  }
+  &__content {
+    width: 78%;
+  }
+}
