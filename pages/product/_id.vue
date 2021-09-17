@@ -40,6 +40,7 @@ export default {
     return {
       qtySelected: 1,
       qtyItems: [],
+      qtyCount: 0
     }
   },
   mounted() {
@@ -55,15 +56,27 @@ export default {
     }
   },
   methods: {
+    getQty(items) {
+      return items.reduce((sum, current) => {
+        return sum + current.qty;
+      }, 0);
+    },
     addToCart() {
-      const product = { id: this.record._id, title: this.record.title, qty: this.qtySelected };
+      const product = {
+        id: this.record._id,
+        title: this.record.title,
+        price: this.record.price,
+        qty: this.qtySelected
+      };
 
       if (!localStorage.getItem('shop_cart')) {
         const cart = {
           userId: new Date().valueOf(),
-          products: []
+          products: [],
+          total: 0
         }
         cart.products.push(product);
+        this.qtyCount = this.getQty(cart.products);
         localStorage.setItem('shop_cart', JSON.stringify(cart));
       } else {
         let localStorageCart = JSON.parse(localStorage.getItem('shop_cart'));
@@ -78,11 +91,17 @@ export default {
             return product;
           });
 
-          localStorage.setItem('shop_cart', JSON.stringify(localStorageCart));
         } else {
           localStorageCart.products.push(product);
-          localStorage.setItem('shop_cart', JSON.stringify(localStorageCart));
         }
+        this.qtyCount = this.getQty(localStorageCart.products);
+
+        localStorageCart.total = localStorageCart.products.reduce((sum, current) => {
+          return sum + current.price * current.qty;
+        }, 0);
+
+        localStorage.setItem('shop_cart', JSON.stringify(localStorageCart));
+        window.location.reload(true);
       }
     }
   },

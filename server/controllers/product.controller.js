@@ -1,6 +1,6 @@
 const ProductModel = require("./../models/ProductModel");
 
-const create = async (req, res) => {
+const create = async(req, res) => {
   try {
     await ProductModel.create(req.body);
     res.status(201).json({ status: 1, message: "success" });
@@ -9,7 +9,7 @@ const create = async (req, res) => {
   }
 };
 
-const update = async (req, res) => {
+const update = async(req, res) => {
   try {
     await ProductModel.findByIdAndUpdate(req.params.id, req.body);
     res
@@ -21,7 +21,7 @@ const update = async (req, res) => {
   }
 };
 
-const fetch = async (req, res) => {
+const fetch = async(req, res) => {
   try {
     let records;
     if (req.query.category) {
@@ -29,6 +29,10 @@ const fetch = async (req, res) => {
         path: "category",
         select: "title"
       });
+      records.reverse();
+    } else if (req.query.ids) {
+      const ids = req.query.ids.split(",");
+      records = await ProductModel.find().where('_id').in(ids);
       records.reverse();
     } else {
       records = await ProductModel.find();
@@ -40,7 +44,7 @@ const fetch = async (req, res) => {
   }
 };
 
-const getById = async (req, res) => {
+const getById = async(req, res) => {
   try {
     let record;
     if (req.query.category) {
@@ -57,7 +61,7 @@ const getById = async (req, res) => {
   }
 };
 
-const remove = async (req, res) => {
+const remove = async(req, res) => {
   try {
     await ProductModel.findByIdAndDelete(req.params.id);
     res.json({ status: "success" });
