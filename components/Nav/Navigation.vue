@@ -30,14 +30,7 @@ export default {
   },
   computed: {
     qty() {
-      console.log(
-        this.$store.getters["cartLocalStorage"],
-        'this.$store.getters["cartLocalStorage"]'
-      );
-      const cart = this.$store.getters["cart"]
-        ? this.$store.getters["cart"]
-        : this.$store.getters["cartLocalStorage"];
-      console.log(cart, "cart");
+      const cart = this.$store.getters["cart"];
       return cart ? cart.qty : null;
     }
   },
@@ -60,6 +53,11 @@ export default {
     Sandwitch,
     Login,
     AppMenu
+  },
+  mounted() {
+    if (localStorage.getItem("shop_cart")) {
+      this.$store.dispatch("createLocalStorage");
+    }
   }
 };
 </script>

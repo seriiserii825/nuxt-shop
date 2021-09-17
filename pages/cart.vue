@@ -30,13 +30,10 @@ export default {
       this.subTotal = JSON.parse(localStorage.getItem("shop_cart")).total;
     },
     getLocalStorageQty(productId) {
-      const storeProducts = this.$store.getters["cart/cartProducts"];
-      console.log(storeProducts, "storeProducts");
-
-      // const product = this.$store.getters["cart/cartProducts"].find(
-      //   (item) => item.id === productId
-      // );
-      return 4;
+      const product = this.$store.getters["cart"].products.find(
+        (item) => item.id === productId
+      );
+      return product.qty;
     }
   },
   components: {

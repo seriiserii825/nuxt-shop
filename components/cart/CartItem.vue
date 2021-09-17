@@ -5,22 +5,22 @@
     el-select.cart-item__qty(v-if="product.countInStock" v-model='qtySelected', placeholder='Select' @change="changeSelect")
       el-option(v-for='(item, index) in qtyItems' :key='item.value' :label='item.label' :value='item.value' )
     .cart-item__price
-      strong $ {{ finalPrice }}
+      strong $ {{ finalPrice.toFixed(2) }}
 </template>
 
 <script>
 export default {
-  props: ['product', 'qty'],
+  props: ["product", "qty"],
   data() {
     return {
-      qtySelected: '1',
+      qtySelected: "1",
       qtyItems: []
-    }
+    };
   },
   methods: {
     changeSelect() {
-      let productsLocal = JSON.parse(localStorage.getItem('shop_cart'));
-      productsLocal.products = productsLocal.products.map(item => {
+      let productsLocal = JSON.parse(localStorage.getItem("shop_cart"));
+      productsLocal.products = productsLocal.products.map((item) => {
         if (this.product._id === item.id) {
           item.qty = this.qtySelected;
           return item;
@@ -30,8 +30,14 @@ export default {
       productsLocal.total = productsLocal.products.reduce((sum, current) => {
         return sum + current.price * current.qty;
       }, 0);
-      localStorage.setItem('shop_cart', JSON.stringify(productsLocal));
-      this.$emit('itemPrice');
+      localStorage.setItem("shop_cart", JSON.stringify(productsLocal));
+      this.$emit("itemPrice");
+
+      this.$store.dispatch("addProductsToLocalStorage", {
+        id: this.product._id,
+        qty: this.qtySelected,
+        product: this.product
+      });
     },
     generateArrayFromNumber(num) {
       const result = [];
@@ -50,10 +56,12 @@ export default {
     }
   },
   mounted() {
-    this.qtyItems = this.product.countInStock ? this.generateArrayFromNumber(this.product.countInStock) : [];
+    this.qtyItems = this.product.countInStock
+      ? this.generateArrayFromNumber(this.product.countInStock)
+      : [];
     this.qtySelected = this.qty;
   }
-}
+};
 </script>
 
 <style lang="scss">
