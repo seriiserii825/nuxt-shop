@@ -2,10 +2,9 @@
   .cart
     .container
       h2.cart__title Shopping Cart
-      .cart__wrap
-        .cart__table(v-if="products.length")
-          CartItem(v-for="product in products" :key="product._id" :product="product" :qty="getLocalStorageQty(product._id)" @itemPrice="itemPrice")
-        h2.cart__no-products(v-else) No products
+      .cart__wrap(v-if="products.length")
+        .cart__table
+          CartItem(v-for="product in products" :key="product._id" :product="product" @itemPrice="itemPrice" @refreshProducts="refreshProducts")
         .cart__total
           h2.cart__total-title Subtotal
           .cart__total-price
@@ -26,52 +25,59 @@ export default {
     };
   },
   methods: {
+    refreshProducts() {
+      this.showLocalStorageProducts();
+    },
     itemPrice() {
       this.subTotal = JSON.parse(localStorage.getItem("shop_cart")).total;
     },
-    getLocalStorageQty(productId) {
-      const product = this.$store.getters["cart"].products.find(
-        (item) => item.id === productId
+    showLocalStorageProducts() {
+      const productsLocalStorage = JSON.parse(
+        localStorage.getItem("shop_cart")
       );
-      return product.qty;
+
+      if (productsLocalStorage) {
+        const products = productsLocalStorage.products;
+        this.subTotal = productsLocalStorage.total;
+        this.productsLocalStorage = productsLocalStorage.products;
+
+        const productsIds = productsLocalStorage.products.map((product) => {
+          return product.id;
+        });
+
+        this.productsIds = productsIds;
+
+        this.$axios
+          .$get(
+            process.env.baseUrl + "/api/v1/product?ids=" + productsIds.join(",")
+          )
+          .then((res) => {
+            this.products = res.records;
+            console.log(this.products, "this.products");
+          })
+          .catch((err) => {
+            if (err.response) {
+              console.log(
+                err.response.data.message,
+                "err.response.data.message"
+              );
+              this.$message.error(err.response.data.message);
+              this.loading = false;
+            } else if (err.request) {
+              this.$message.error(err.request);
+              console.log(err.request, "err.request");
+              this.loading = false;
+            }
+          });
+      }
     }
   },
   components: {
     CartItem
   },
   mounted() {
-    this.subTotal = JSON.parse(localStorage.getItem("shop_cart")).total;
-
-    const productsLocalStorage = localStorage.getItem("shop_cart")
-      ? JSON.parse(localStorage.getItem("shop_cart"))
-      : null;
-    if (productsLocalStorage) {
-      this.productsLocalStorage = productsLocalStorage.products;
-      const productsIds = productsLocalStorage.products.map((product) => {
-        return product.id;
-      });
-
-      this.productsIds = productsIds;
-
-      this.$axios
-        .$get(
-          process.env.baseUrl + "/api/v1/product?ids=" + productsIds.join(",")
-        )
-        .then((res) => {
-          this.products = res.records;
-        })
-        .catch((err) => {
-          if (err.response) {
-            console.log(err.response.data.message, "err.response.data.message");
-            this.$message.error(err.response.data.message);
-            this.loading = false;
-          } else if (err.request) {
-            this.$message.error(err.request);
-            console.log(err.request, "err.request");
-            this.loading = false;
-          }
-        });
-    }
+    this.showLocalStorageProducts();
+    console.log(this.products.length, "this.products.length");
     // const products = this.$axios.$get(process.env.baseUrl + '/api/v1/product')
   }
 };
@@ -90,7 +96,7 @@ export default {
     justify-content: space-between;
   }
   &__table {
-    width: 60%;
+    width: 80%;
   }
   &__row {
     display: flex;
@@ -107,7 +113,7 @@ export default {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: 35%;
+    width: 20%;
     border: 1px solid #eee;
     &-price {
       padding: 2rem;

@@ -90,6 +90,29 @@ export const actions = {
       localStorage.setItem("shop_cart", JSON.stringify(localStorageCart));
       commit("setCart", localStorageCart);
     }
+  },
+  removeFromLocalStorage({ commit }, payload) {
+    const { id } = payload;
+    const localStorageCart = JSON.parse(localStorage.getItem("shop_cart"));
+    const products = localStorageCart.products.filter(
+      (product) => product.id !== id
+    );
+
+    localStorageCart.products = products;
+
+    localStorageCart.total = localStorageCart.products.reduce(
+      (sum, current) => {
+        return sum + current.price * current.qty;
+      },
+      0
+    );
+
+    localStorageCart.qty = localStorageCart.products.reduce((sum, current) => {
+      return sum + current.qty;
+    }, 0);
+
+    localStorage.setItem("shop_cart", JSON.stringify(localStorageCart));
+    commit("setCart", localStorageCart);
   }
 };
 

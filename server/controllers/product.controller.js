@@ -24,15 +24,19 @@ const update = async(req, res) => {
 const fetch = async(req, res) => {
   try {
     let records;
+    console.log(req.query, "req.query");
     if (req.query.category) {
       records = await ProductModel.find().populate({
         path: "category",
         select: "title"
       });
       records.reverse();
-    } else if (req.query.ids) {
+    } else if (req.query.ids === "" || req.query.ids) {
+      if (req.query.ids === "") {
+        return res.json({ status: "success", records: [] });
+      }
       const ids = req.query.ids.split(",");
-      records = await ProductModel.find().where('_id').in(ids);
+      records = await ProductModel.find().where("_id").in(ids);
       records.reverse();
     } else {
       records = await ProductModel.find();
