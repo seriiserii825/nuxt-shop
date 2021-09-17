@@ -19,7 +19,19 @@ export default {
   },
   methods: {
     changeSelect() {
-      this.$emit('itemPrice', this.finalPrice);
+      let productsLocal = JSON.parse(localStorage.getItem('shop_cart'));
+      productsLocal.products = productsLocal.products.map(item => {
+        if (this.product._id === item.id) {
+          item.qty = this.qtySelected;
+          return item;
+        }
+        return item;
+      });
+      productsLocal.total = productsLocal.products.reduce((sum, current) => {
+        return sum + current.price * current.qty;
+      }, 0);
+      localStorage.setItem('shop_cart', JSON.stringify(productsLocal));
+      this.$emit('itemPrice');
     },
     generateArrayFromNumber(num) {
       const result = [];

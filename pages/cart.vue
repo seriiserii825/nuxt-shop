@@ -9,6 +9,7 @@
         .cart__total
           h2.cart__total-title Subtotal
           .cart__total-price
+            strong $ {{ subTotal }}
           el-button(type="success") Proceed to checkout
 </template>
 
@@ -20,27 +21,25 @@ export default {
     return {
       products: [],
       productsIds: [],
-      productsLocalStorage: []
+      productsLocalStorage: [],
+      subTotal: 0
     }
   },
   methods: {
-    itemPrice(value) {
-      console.log(value, 'value')
+    itemPrice() {
+      this.subTotal = JSON.parse(localStorage.getItem('shop_cart')).total;
     },
     getLocalStorageQty(productId) {
       const product = this.productsLocalStorage.find(item => item.id === productId);
       return product.qty;
     }
   },
-  computed: {
-    getSubtotal() {
-
-    }
-  },
   components: {
     CartItem
   },
   mounted() {
+    this.subTotal = JSON.parse(localStorage.getItem('shop_cart')).total;
+
     const productsLocalStorage = localStorage.getItem('shop_cart') ? JSON.parse(localStorage.getItem('shop_cart')) : null;
     if (productsLocalStorage) {
       this.productsLocalStorage = productsLocalStorage.products;
@@ -95,7 +94,15 @@ export default {
     margin-right: 5rem;
   }
   &__total {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     width: 35%;
+    border: 1px solid #eee;
+    &-price {
+      padding: 2rem;
+    }
   }
 }
 </style>
