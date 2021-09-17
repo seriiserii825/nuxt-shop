@@ -11,8 +11,6 @@ const categoryRouter = require("./routes/category.routes");
 
 const PORT = process.env.PORT || 3000;
 
-
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -22,6 +20,13 @@ app.use("/", authRouter);
 app.use("/api/v1/product/", productRouter);
 app.use("/api/v1/category/", categoryRouter);
 app.use("/api/v1/media", mediaRouter);
+
+app.use((req, res, next) => {
+  const error = new Error(`Not Found - ${req.originalUrl}`);
+  res.status(404);
+  res.json({ status: "fail", message: `Not Found - ${req.originalUrl}` });
+  next(error);
+});
 
 const mongoose = require("mongoose");
 mongoose.Schema.Types.Boolean.convertToFalse.add("");
