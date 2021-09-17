@@ -23,49 +23,61 @@ export default {
       productsIds: [],
       productsLocalStorage: [],
       subTotal: 0
-    }
+    };
   },
   methods: {
     itemPrice() {
-      this.subTotal = JSON.parse(localStorage.getItem('shop_cart')).total;
+      this.subTotal = JSON.parse(localStorage.getItem("shop_cart")).total;
     },
     getLocalStorageQty(productId) {
-      const product = this.productsLocalStorage.find(item => item.id === productId);
-      return product.qty;
+      const storeProducts = this.$store.getters["cart/cartProducts"];
+      console.log(storeProducts, "storeProducts");
+
+      // const product = this.$store.getters["cart/cartProducts"].find(
+      //   (item) => item.id === productId
+      // );
+      return 4;
     }
   },
   components: {
     CartItem
   },
   mounted() {
-    this.subTotal = JSON.parse(localStorage.getItem('shop_cart')).total;
+    this.subTotal = JSON.parse(localStorage.getItem("shop_cart")).total;
 
-    const productsLocalStorage = localStorage.getItem('shop_cart') ? JSON.parse(localStorage.getItem('shop_cart')) : null;
+    const productsLocalStorage = localStorage.getItem("shop_cart")
+      ? JSON.parse(localStorage.getItem("shop_cart"))
+      : null;
     if (productsLocalStorage) {
       this.productsLocalStorage = productsLocalStorage.products;
-      const productsIds = productsLocalStorage.products.map(product => {
+      const productsIds = productsLocalStorage.products.map((product) => {
         return product.id;
       });
 
       this.productsIds = productsIds;
 
-      this.$axios.$get(process.env.baseUrl + '/api/v1/product?ids=' + productsIds.join(',')).then(res => {
-        this.products = res.records;
-      }).catch(err => {
-        if (err.response) {
-          console.log(err.response.data.message, 'err.response.data.message');
-          this.$message.error(err.response.data.message);
-          this.loading = false;
-        } else if (err.request) {
-          this.$message.error(err.request);
-          console.log(err.request, 'err.request')
-          this.loading = false;
-        }
-      });
+      this.$axios
+        .$get(
+          process.env.baseUrl + "/api/v1/product?ids=" + productsIds.join(",")
+        )
+        .then((res) => {
+          this.products = res.records;
+        })
+        .catch((err) => {
+          if (err.response) {
+            console.log(err.response.data.message, "err.response.data.message");
+            this.$message.error(err.response.data.message);
+            this.loading = false;
+          } else if (err.request) {
+            this.$message.error(err.request);
+            console.log(err.request, "err.request");
+            this.loading = false;
+          }
+        });
     }
     // const products = this.$axios.$get(process.env.baseUrl + '/api/v1/product')
   }
-}
+};
 </script>
 
 <style lang="scss">

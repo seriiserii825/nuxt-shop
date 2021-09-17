@@ -2,26 +2,26 @@ export const state = () => {
   return {
     popup: false,
     headerPopup: false
-  }
-}
+  };
+};
 
 export const mutations = {
   setPopup(state, payload) {
-    state.popup = payload
+    state.popup = payload;
   },
   setHeaderPopup(state, payload) {
-    state.headerPopup = payload
-  },
-}
+    state.headerPopup = payload;
+  }
+};
 
 export const actions = {
   setPopup({ commit }, payload) {
-    commit('setPopup', payload)
+    commit("setPopup", payload);
   },
   setHeaderPopup({ commit }, payload) {
-    commit('setHeaderPopup', payload)
-  },
-}
+    commit("setHeaderPopup", payload);
+  }
+};
 
 export const getters = {
   popup(state) {
@@ -30,4 +30,4 @@ export const getters = {
   headerPopup(state) {
     return state.headerPopup;
   }
-}
+};

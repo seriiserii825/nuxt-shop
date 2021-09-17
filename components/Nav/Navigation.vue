@@ -10,7 +10,8 @@
       .navigation__right
         n-link(to="/cart").navigation__cart
           span.el-icon-shopping-cart-2
-          span.navigation__qty(v-if="qty") {{ qty }}
+          span.navigation__qty
+            pre {{ qty }}
         n-link(to="/admin").navigation__login
           Login
 </template>
@@ -24,8 +25,20 @@ export default {
   data() {
     return {
       sandwichActive: false,
-      menuMobileActive: false,
-      qty: null
+      menuMobileActive: false
+    };
+  },
+  computed: {
+    qty() {
+      console.log(
+        this.$store.getters["cartLocalStorage"],
+        'this.$store.getters["cartLocalStorage"]'
+      );
+      const cart = this.$store.getters["cart"]
+        ? this.$store.getters["cart"]
+        : this.$store.getters["cartLocalStorage"];
+      console.log(cart, "cart");
+      return cart ? cart.qty : null;
     }
   },
   methods: {
@@ -47,11 +60,8 @@ export default {
     Sandwitch,
     Login,
     AppMenu
-  },
-  mounted() {
-    this.qty = localStorage.getItem('shop_cart') ? this.getQty(JSON.parse(localStorage.getItem('shop_cart')).products) : null;
   }
-}
+};
 </script>
 <style lang="scss">
 @import "@/assets/scss/partials/variables.scss";

@@ -30,7 +30,7 @@ import Rating from "../../components/product/Rating";
 export default {
   async asyncData({ $axios, params }) {
     let { record } = await $axios.$get(
-      process.env.baseUrl + "/api/v1/product/" + params.id + '?category=true'
+      process.env.baseUrl + "/api/v1/product/" + params.id + "?category=true"
     );
     return {
       record
@@ -41,7 +41,7 @@ export default {
       qtySelected: 1,
       qtyItems: [],
       qtyCount: 0
-    }
+    };
   },
   mounted() {
     if (this.record.countInStock) {
@@ -69,46 +69,17 @@ export default {
         qty: this.qtySelected
       };
 
-      if (!localStorage.getItem('shop_cart')) {
-        const cart = {
-          userId: new Date().valueOf(),
-          products: [],
-          total: 0
-        }
-        cart.products.push(product);
-        this.qtyCount = this.getQty(cart.products);
-        localStorage.setItem('shop_cart', JSON.stringify(cart));
-      } else {
-        let localStorageCart = JSON.parse(localStorage.getItem('shop_cart'));
-        const idx = localStorageCart.products.find(product => product.id === this.record._id);
-
-        if (idx) {
-          localStorageCart.products = localStorageCart.products.map(product => {
-            if (product.id === this.record._id) {
-              product.qty = this.qtySelected;
-              return product;
-            }
-            return product;
-          });
-
-        } else {
-          localStorageCart.products.push(product);
-        }
-        this.qtyCount = this.getQty(localStorageCart.products);
-
-        localStorageCart.total = localStorageCart.products.reduce((sum, current) => {
-          return sum + current.price * current.qty;
-        }, 0);
-
-        localStorage.setItem('shop_cart', JSON.stringify(localStorageCart));
-        window.location.reload(true);
-      }
+      this.$store.dispatch("addProductsToLocalStorage", {
+        id: this.record._id,
+        qty: this.qtySelected,
+        product: product
+      });
     }
   },
   components: {
     Rating
   }
-}
+};
 </script>
 <style lang="scss">
 .single-product {

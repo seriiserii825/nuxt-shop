@@ -29,10 +29,7 @@ export default {
   },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-    "@/plugins/globals",
-    { src: '@/plugins/mavon-editor', ssr: false }
-  ],
+  plugins: ["@/plugins/globals", { src: "@/plugins/mavon-editor", ssr: false }],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -47,17 +44,18 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     "@nuxtjs/axios",
-    '@tui-nuxt/editor',
+    "@tui-nuxt/editor",
     "@nuxtjs/auth-next",
-    '@nuxt/image',
+    "@nuxt/image",
+    ["nuxt-vuex-localstorage", { localStorage: ["cart"] }]
   ],
   tui: {
     editor: {
       stylesheet: {
-        editor: 'tui-editor/dist/tui-editor.min.css',
-        contents: 'tui-editor/dist/tui-editor-contents.min.css',
-        codemirror: 'codemirror/lib/codemirror.css',
-        codeHighlight: 'highlight.js/styles/github.css',
+        editor: "tui-editor/dist/tui-editor.min.css",
+        contents: "tui-editor/dist/tui-editor-contents.min.css",
+        codemirror: "codemirror/lib/codemirror.css",
+        codeHighlight: "highlight.js/styles/github.css"
       }
     }
   },
