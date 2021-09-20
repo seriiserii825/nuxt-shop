@@ -77,8 +77,6 @@ export default {
   },
   mounted() {
     this.showLocalStorageProducts();
-    console.log(this.products.length, "this.products.length");
-    // const products = this.$axios.$get(process.env.baseUrl + '/api/v1/product')
   }
 };
 </script>

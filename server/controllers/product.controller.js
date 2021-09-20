@@ -1,6 +1,6 @@
 const ProductModel = require("./../models/ProductModel");
 
-const create = async(req, res) => {
+const create = async (req, res) => {
   try {
     await ProductModel.create(req.body);
     res.status(201).json({ status: 1, message: "success" });
@@ -9,7 +9,7 @@ const create = async(req, res) => {
   }
 };
 
-const update = async(req, res) => {
+const update = async (req, res) => {
   try {
     await ProductModel.findByIdAndUpdate(req.params.id, req.body);
     res
@@ -21,10 +21,9 @@ const update = async(req, res) => {
   }
 };
 
-const fetch = async(req, res) => {
+const fetch = async (req, res) => {
   try {
     let records;
-    console.log(req.query, "req.query");
     if (req.query.category) {
       records = await ProductModel.find().populate({
         path: "category",
@@ -48,7 +47,7 @@ const fetch = async(req, res) => {
   }
 };
 
-const getById = async(req, res) => {
+const getById = async (req, res) => {
   try {
     let record;
     if (req.query.category) {
@@ -65,7 +64,7 @@ const getById = async(req, res) => {
   }
 };
 
-const remove = async(req, res) => {
+const remove = async (req, res) => {
   try {
     await ProductModel.findByIdAndDelete(req.params.id);
     res.json({ status: "success" });
