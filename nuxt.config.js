@@ -46,8 +46,7 @@ export default {
     "@nuxtjs/axios",
     "@tui-nuxt/editor",
     "@nuxtjs/auth-next",
-    "@nuxt/image",
-    ["nuxt-vuex-localstorage", { localStorage: ["cart"] }]
+    "@nuxt/image"
   ],
   tui: {
     editor: {
