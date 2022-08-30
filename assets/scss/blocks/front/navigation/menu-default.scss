@@ -1,0 +1,17 @@
+.menu-default {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 2rem 5rem;
+  border-bottom: 1px solid #eee;
+  a {
+    display: block;
+    margin-left: 2rem;
+    padding: 1rem 3rem;
+    background: #eee;
+    transition: all .4s;
+    &:hover {
+      background: darken(#eee, 5%);
+    }
+  }
+}

@@ -1,0 +1,43 @@
+.auth-form {
+  &__title {
+    margin-bottom: 2rem;
+    font-size: 1.4rem;
+  }
+  &__form-group {
+    margin-bottom: 2rem;
+  }
+  label {
+    display: block;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+  }
+  input {
+    width: 100%;
+    height: 3.4rem;
+    border: 1px solid #ccc;
+  }
+  button[type="submit"] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 4rem;
+    background: #eee;
+    border: none;
+    cursor: pointer;
+    transition: all .4s;
+    &:hover {
+      background: darken(#eee, 5%);
+    }
+  }
+  &__info {
+    margin-bottom: 2rem;
+    font-size: 1.4rem;
+    a {
+      text-decoration: underline;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+}
