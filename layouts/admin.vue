@@ -23,6 +23,7 @@ import AdminHeader from "../components/admin/layouts/AdminHeader.vue";
 import AdminSidebar from "../components/admin/layouts/AdminSidebar.vue";
 import AddMedia from "../components/admin/media/AddMedia.vue";
 export default {
+  middleware: "auth",
   components: { AdminSidebar, AdminHeader, AddMedia },
   computed: {
     isVisibleSidebar() {
