@@ -4,8 +4,9 @@
   </Form>
 </template>
 <script>
-import MediaTable from "../../components/admin/media/MediaTable.vue";
+import MediaTable from "@/admin/media/MediaTable.vue";
 export default {
+  layout: 'admin',
   components: { MediaTable },
 };
 </script>

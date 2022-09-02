@@ -20,10 +20,11 @@
   </AdminForm>
 </template>
 <script>
-import AdminForm from "../../components/admin/form/Form";
+import AdminForm from "@/admin/form/Form";
 export default {
   data() {
     return {
+      id: "",
       name: "",
       status: 1,
       errors: {},
@@ -35,8 +36,8 @@ export default {
       const data = { name: this.name, status: this.status };
 
       this.$axios
-        .post("/category", data)
-        .then((res) => {
+        .put("/category/" + this.id, data)
+        .then(() => {
           this.$router.push("/category");
         })
         .catch((err) => {
@@ -45,9 +46,27 @@ export default {
           }
         });
     },
+    getData() {
+      this.$axios
+        .get("/category/" + this.id)
+        .then((res) => {
+          const { name, status } = res.data.data;
+          this.name = name;
+          this.status = status;
+        })
+        .catch((err) => {
+          if (err.response.data && err.response.data.errors) {
+            setErrors(err.response.data.errors);
+          }
+        });
+    },
   },
   components: {
     AdminForm,
+  },
+  created() {
+    this.id = this.$route.params.id;
+    this.getData();
   },
 };
 </script>

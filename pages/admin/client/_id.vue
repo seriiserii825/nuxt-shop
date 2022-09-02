@@ -61,7 +61,7 @@
   </AdminForm>
 </template>
 <script>
-import AdminForm from "../../components/admin/form/Form";
+import AdminForm from "@/admin/form/Form";
 export default {
   data() {
     return {

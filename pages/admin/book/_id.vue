@@ -1,5 +1,5 @@
 <template>
-  <AdminForm label="Create book">
+  <AdminForm label="Edit book">
     <div class="form__flex">
       <div class="form__item" :class="{ 'form__item--error': errors.name }">
         <label class="form__label" htmlFor="name"> Name </label>
@@ -81,7 +81,7 @@
 </template>
 <script>
 import AdminMedia from "@/admin/media/Media.vue";
-import AdminForm from "../../components/admin/form/Form";
+import AdminForm from "@/admin/form/Form";
 export default {
   data() {
     return {
@@ -112,7 +112,7 @@ export default {
       };
 
       this.$axios
-        .post("/book", data)
+        .put("/book/"+ this.$route.params.id, data)
         .then(() => {
           this.$router.push("/book");
         })
@@ -134,6 +134,17 @@ export default {
       this.media_images = images;
       this.cover_image = images[0];
     },
+    getData() {
+      this.$axios.get("/book/" + this.$route.params.id).then((res) => {
+        this.name = res.data.data.name;
+        this.category_id = res.data.data.category_id;
+        this.description = res.data.data.description;
+        this.amount = res.data.data.amount;
+        this.cover_image = res.data.data.cover_image;
+        this.author = res.data.data.author;
+        this.status = res.data.data.status;
+      });
+    },
     setCategories() {
       this.$axios
         .get("/book_create")
@@ -152,6 +163,8 @@ export default {
   },
   created() {
     this.setCategories();
+    this.getData();
   },
 };
 </script>
+

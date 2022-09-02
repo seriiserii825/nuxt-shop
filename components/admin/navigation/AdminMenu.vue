@@ -3,33 +3,33 @@
     <AdminMenuItem
       label="Dashboard"
       icon="/svg/dashboard.svg"
-      url="/"
+      url="/admin"
       :link="true"
     ></AdminMenuItem>
     <AdminMenuItem
       label="Category"
       icon="/svg/file-plus.svg"
-      :items="[{ url: '/category/create' }, { url: '/category' }]"
+      :items="[{ url: '/admin/category/create' }, { url: '/admin/category' }]"
     />
     <AdminMenuItem
       label="Book"
       icon="/svg/book.svg"
-      :items="[{ url: '/book/create' }, { url: '/book' }]"
+      :items="[{ url: '/admin/book/create' }, { url: '/admin/book' }]"
     />
     <AdminMenuItem
       label="Clients"
       icon="/svg/user.svg"
-      :items="[{ url: '/client/create' }, { url: '/client' }]"
+      :items="[{ url: '/admin/client/create' }, { url: '/admin/client' }]"
     />
     <AdminMenuItem
       label="Issue Book"
       icon="/svg/user.svg"
-      :items="[{ url: '/issue-book/create' }, { url: '/issue-book' }]"
+      :items="[{ url: '/admin/issue-book/create' }, { url: '/admin/issue-book' }]"
     />
     <AdminMenuItem
       label="Return Book"
       icon="/svg/user.svg"
-      :items="[{ url: '/return-book/create' }, { url: '/return-book' }]"
+      :items="[{ url: '/admin/return-book/create' }, { url: '/admin/return-book' }]"
     />
   </ul>
 </template>

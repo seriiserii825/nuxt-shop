@@ -43,6 +43,7 @@
 import AdminForm from "@/admin/form/Form.vue";
 import AdminTable from "@/admin/form/AdminTable.vue";
 export default {
+  layout: 'admin',
   data() {
     return {
       search: "",

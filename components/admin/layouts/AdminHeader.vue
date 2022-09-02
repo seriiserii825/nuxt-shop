@@ -12,7 +12,7 @@
       <button class="btn btn--success" @click="showAdminMedia">
         Add Media
       </button>
-      <nuxt-link class="btn" to="/media"> View Media </nuxt-link>
+      <nuxt-link class="btn" to="/admin/media"> View Media </nuxt-link>
     </div>
     <div class="admin-header__profile">
       <nuxt-link to="/">
