@@ -36,6 +36,19 @@ export default {
       return this.$store.state.isVisibleAddMedia;
     },
   },
+  methods: {
+    me() {
+      this.$axios.post('/auth/me').then((response) => {
+        console.log(response.data, 'response.data');
+        this.$store.commit('setUser', response.data);
+      }).catch((error) => {
+        console.log(error);
+      });
+    }
+  },
+  created() {
+    this.me();
+  }
 };
 </script>
 <style lang="scss"></style>

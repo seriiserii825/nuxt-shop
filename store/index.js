@@ -4,6 +4,7 @@ export const state = () => ({
     isVisibleAddMedia: false,
     isVisibleNotify: false,
     notifyMessage: "",
+    user: {}
 });
 
 export const mutations = {
@@ -22,6 +23,9 @@ export const mutations = {
     },
     hideNotify(state) {
         state.isVisibleNotify = false;
+    },
+    setUser(state, payload){
+        state.user = payload;
     }
 };
 
