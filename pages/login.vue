@@ -28,34 +28,23 @@ export default {
   },
   methods: {
     async onSubmit() {
-      console.log(this.email, 'this.email')
-      console.log(this.password, 'this.password')
       try {
-        let response = await this.$auth.loginWith('local', {
-          email: this.email,
-          password: this.password,
+        await this.$auth.loginWith('laravelJWT', {
+          data: {
+            email: this.email,
+            password: this.password,
+          }
         });
-        console.log(response)
+        await this.$router.push('/');
       } catch (err) {
-        console.log(err.response.data, 'err.response.data')
         this.errors = err.response.data.errors;
       }
-      // this.$axios.post('/login', {
-      //   email: this.email,
-      //   password: this.password,
-      // }).then(response => {
-      //   localStorage.setItem('token', response.data.access_token);
-      //   this.$router.push('/');
-      // }).catch(error => {
-      //   if (error.response.data && error.response.data.error) {
-      //     this.$store.commit('showNotify', {
-      //       text: error.response.data.error,
-      //     });
-      //     this.$router.push('/');
-      //   }
-      //   this.errors = error.response.data.errors;
-      // });
     },
+  },
+  created() {
+    if (this.$auth && this.$auth.user) {
+      this.$router.push('/');
+    }
   }
 }
 </script>

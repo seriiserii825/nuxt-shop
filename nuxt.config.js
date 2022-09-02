@@ -42,28 +42,27 @@ export default {
     // Axios module configuration: https://go.nuxtjs.dev/config-axios
     axios: {
         // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-        baseURL: "https://localhost:8088/api",
+        baseURL: "https://localhost:8088/api"
     },
 
     // Build Configuration: https://go.nuxtjs.dev/config-build
     build: {},
     auth: {
         strategies: {
-            local: {
-                token: {
-                    property: 'token',
-                    global: true,
-                    // required: true,
-                    // type: 'Bearer'
-                },
-                user: {
-                    property: 'user',
-                    // autoFetch: true
-                },
+            'laravelJWT': {
+                provider: 'laravel/jwt',
+                url: '/',
                 endpoints: {
-                    login: { url: '/login', method: 'post' },
-                    logout: { url: '/api/auth/logout', method: 'post' },
-                    user: { url: '/api/auth/me', method: 'get' }
+                    login: {url: '/login', method: 'post'},
+                    logout: {url: '/auth/logout', method: 'post'},
+                    user: {url: '/auth/user', method: 'get'}
+                },
+                token: {
+                    property: 'access_token',
+                    maxAge: 60 * 60
+                },
+                refreshToken: {
+                    maxAge: 20160 * 60
                 }
             }
         }

@@ -6,10 +6,22 @@
         <nuxt-link to="/">Home</nuxt-link>
       </li>
       <li>
+        <nuxt-link to="/about">About</nuxt-link>
+      </li>
+      <li v-if="!this.$store.state.user.name">
         <nuxt-link to="/login">Login</nuxt-link>
       </li>
-      <li>
+      <li v-if="this.$store.state.role === 'admin'">
+        <nuxt-link to="/admin">Admin</nuxt-link>
+      </li>
+      <li v-if="this.$store.state.role === 'user'">
+        <nuxt-link to="/cabinet">Cabinet</nuxt-link>
+      </li>
+      <li v-if="!this.$store.state.user.name">
         <nuxt-link to="/register">Register</nuxt-link>
+      </li>
+      <li v-if="this.$store.state.user.name">
+        <a href="#" @click.prevent="logout">Logout</a>
       </li>
     </ul>
   </div>
@@ -37,17 +49,19 @@ export default {
     },
   },
   methods: {
-    me() {
-      this.$axios.post('/auth/me').then((response) => {
-        console.log(response.data, 'response.data');
-        this.$store.commit('setUser', response.data);
-      }).catch((error) => {
-        console.log(error);
-      });
+    async logout() {
+      await this.$auth.logout();
+      this.$router.push('/login');
     }
   },
-  created() {
-    this.me();
+  mounted() {
+    if (this.$auth.user) {
+      this.$store.commit('setUser', this.$auth.user.user);
+      this.$store.commit('setRole', this.$auth.user.role[0].name);
+    }else{
+      this.$store.commit('setUser', {});
+      this.$store.commit('setRole', '');
+    }
   }
 };
 </script>
