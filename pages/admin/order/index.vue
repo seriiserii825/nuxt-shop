@@ -1,47 +1,38 @@
-<template>
-  <AdminForm label="Categories">
-    <AdminTable>
-      <div class="search">
-        <label for="search">Search:</label>
-        <input type="text" v-model="search" />
-      </div>
-      <table>
-        <thead>
-          <tr>
-            <th>#ID</th>
-            <th>Name</th>
-            <th>Status</th>
-            <th>Updated At</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="item in data" :key="item.id">
-            <td>{{ item.id }}</td>
-            <td>{{ item.name }}</td>
-            <td>
-              <span class="badge" :class="badgeClass(item)">
-                {{ item.status }}
-              </span>
-            </td>
-            <td>{{ formatDate(item.updated_at) }}</td>
-            <td>
-              <nuxt-link class="btn btn--success" :to="`/category/` + item.id"
-                >Edit</nuxt-link
-              >
-              <button class="btn btn--danger" @click="deleteItem(item.id)">
-                Delete
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </AdminTable>
-  </AdminForm>
+<template lang="pug">
+  AdminForm(label='Categories')
+    AdminTable
+      .search
+        label(for='search') Search:
+        input(type='text', v-model='search')
+      table
+        thead
+          tr
+            th #ID
+            th User
+            th Status
+            th Sum
+            th Updated At
+            th Created At
+            th Action
+        tbody
+          tr(v-for='item in data', :key='item.id')
+            td {{ item.id }}
+            td {{ item.user.name }}
+            td
+              span.badge(:class='badgeClass(item)')
+                | {{ orderStatus(item.status) }}
+            td {{ item.sum }}
+            td {{ formatDate(item.updated_at) }}
+            td {{ formatDate(item.created_at) }}
+            td
+              nuxt-link.btn.btn--success(:to='`/admin/order/` + item.id') Edit
+              button.btn.btn--danger(@click='deleteItem(item.id)')
+                | Delete
 </template>
 <script>
 import AdminForm from "@/admin/form/Form.vue";
 import AdminTable from "@/admin/form/AdminTable.vue";
+
 export default {
   layout: 'admin',
   data() {
@@ -56,7 +47,14 @@ export default {
   },
   methods: {
     badgeClass(item) {
-      return item.status === 1 ? "badge--success" : "badge--danger";
+      switch (item.status) {
+        case "0":
+          return "badge--success";
+        case "1":
+          return "badge--warning";
+        case "2":
+          return "badge--error";
+      }
     },
     formatDate(date) {
       let options = {
@@ -73,24 +71,33 @@ export default {
     },
     getData() {
       this.$axios
-        .get("/category")
-        .then((res) => {
-          this.data = res.data.data.reverse();
-          console.log(this.data, "this.data");
-        })
-        .catch((err) => {
-          console.log(err.response, "err.response");
-        });
+          .get("/auth/order")
+          .then((res) => {
+            this.data = res.data.data.reverse();
+          })
+          .catch((err) => {
+            console.log(err.response, "err.response");
+          });
     },
     deleteItem(id) {
       this.$axios
-        .delete("/category/" + id)
-        .then(() => {
-          this.getData();
-        })
-        .catch((err) => {
-          console.log(err.response.data.message, "err.response");
-        });
+          .delete("/category/" + id)
+          .then(() => {
+            this.getData();
+          })
+          .catch((err) => {
+            console.log(err.response.data.message, "err.response");
+          });
+    },
+    orderStatus(status) {
+      switch (status) {
+        case "0":
+          return "New";
+        case "1":
+          return "Finished"
+        case "2":
+          return "Deleted"
+      }
     },
   },
   created() {

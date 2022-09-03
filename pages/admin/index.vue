@@ -53,7 +53,7 @@
                   td {{item.id}}
                   td {{item.user.name}}
                   td
-                    span.badge(:class="{'badge--success': item.status === '0', 'badge--error': item.status === '2'}") {{orderStatus(item.status)}}
+                    span.badge(:class="badgeClass(item.status)") {{orderStatus(item.status)}}
                   td {{item.sum}}
       .admin__column
         AdminForm(label="Last products")
@@ -115,6 +115,7 @@ export default {
       });
     },
     orderStatus(status) {
+      console.log(status, 'status')
       switch (status) {
         case "0":
           return "New";
@@ -122,6 +123,16 @@ export default {
           return "Finished"
         case "2":
           return "Deleted"
+      }
+    },
+    badgeClass(status) {
+      switch (status) {
+        case "0":
+          return "badge--success";
+        case "1":
+          return "";
+        case "2":
+          return "badge--error";
       }
     },
     adminProductsImage() {
