@@ -13,4 +13,14 @@
     color: white;
     background-color: #666;
   }
+  &__children {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__actions {
+    .btn {
+      margin-left: 1rem;
+    }
+  }
 }
