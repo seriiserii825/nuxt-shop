@@ -6,12 +6,12 @@
           <div class="form__icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50">
               <path
-                :style="{
+                  :style="{
                   stroke: 'none',
                   fill: '#000',
                   fillOpacity: 1,
                 }"
-                d="M10.293 17.832a3.123 3.123 0 0 0 4.418
+                  d="M10.293 17.832a3.123 3.123 0 0 0 4.418
               0l7.164-7.16v23.703a3.124 3.124 0 1 0 6.25 0V10.672l7.164
               7.168a3.13 3.13 0 0 0 4.422 0 3.126 3.126 0 0 0
               0-4.418L27.21.922A3.093 3.093 0 0 0 25 0c-.8
@@ -26,11 +26,11 @@
             </svg>
           </div>
           <input
-            @change="filesHandler"
-            type="file"
-            placeholder="Enter image..."
-            ref="imageRef"
-            multiple
+              @change="filesHandler"
+              type="file"
+              placeholder="Enter image..."
+              ref="imageRef"
+              multiple
           />
           <ul class="form__list">
             <li v-for="image_url in images_url" :key="image_url">
@@ -45,7 +45,6 @@
   </div>
 </template>
 <script>
-import axios from "axios";
 export default {
   data() {
     return {
@@ -69,14 +68,16 @@ export default {
         formData.append(`files[${i}]`, this.files[i]);
       }
 
-      axios
-        .post("/media", formData)
-        .then((res) => {
-          this.setIsVisibleAdminMedia(false);
-        })
-        .catch((error) => {
-          console.log(error.response, "error.response");
-        });
+      this.$axios
+          .post("/auth/media", formData)
+          .then((res) => {
+            this.$store.commit('setIsVisibleAddMedia', false);
+            window.location.reload();
+            // this.$router.push('/admin/media');
+          })
+          .catch((error) => {
+            console.log(error.response, "error.response");
+          });
     },
     hideAdminMedia() {
       this.$store.dispatch("hideAdminMedia");

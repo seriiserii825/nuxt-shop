@@ -25,11 +25,14 @@ export const mutations = {
     hideNotify(state) {
         state.isVisibleNotify = false;
     },
-    setUser(state, payload){
+    setUser(state, payload) {
         state.user = payload;
     },
-    setRole(state, payload){
+    setRole(state, payload) {
         state.role = payload;
+    },
+    setIsVisibleAddMedia(state, payload) {
+        state.isVisibleAddMedia = payload;
     }
 };
 

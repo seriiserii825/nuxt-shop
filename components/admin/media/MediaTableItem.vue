@@ -7,7 +7,7 @@
     <td>{{ item.name }}</td>
     <td>{{ formatDate(item.created_at) }}</td>
     <td>
-      <button class="btn btn--danger" @click="deleteItem(id)">
+      <button class="btn btn--danger" @click.prevent="deleteItem(item.id)">
         Delete
       </button>
     </td>
@@ -36,8 +36,8 @@ export default {
       return new Intl.DateTimeFormat("en", options).format(new Date(date));
     },
     deleteItem(id) {
-      axios
-        .delete(`/media/${id}`)
+      this.$axios
+        .delete(`/auth/media/${id}`)
         .then(() => {
           this.$emit("delete");
         })
