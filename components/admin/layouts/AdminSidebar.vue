@@ -1,10 +1,9 @@
-<template>
-  <div class="admin-sidebar">
-    <header class="admin-sidebar__header">
-      <h1 class="admin-sidebar__title">Books</h1>
-    </header>
-    <AdminMenu />
-  </div>
+<template lang="pug">
+.admin-sidebar
+  header.admin-sidebar__header
+    h1.admin-sidebar__title
+      nuxt-link(to="/") Home
+  AdminMenu
 </template>
 <script>
 export default {};

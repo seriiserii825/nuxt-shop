@@ -1,0 +1,11 @@
+.admin {
+  &__widgets {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -2rem;
+    &-item {
+      margin: 0 2rem;
+      flex-basis: calc(25% - 4rem);
+    }
+  }
+}
