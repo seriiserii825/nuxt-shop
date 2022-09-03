@@ -51,9 +51,9 @@ export default {
         case "0":
           return "badge--success";
         case "1":
-          return "badge--warning";
+          return "";
         case "2":
-          return "badge--error";
+          return "badge--danger";
       }
     },
     formatDate(date) {
@@ -81,7 +81,7 @@ export default {
     },
     deleteItem(id) {
       this.$axios
-          .delete("/category/" + id)
+          .delete("/auth/order/" + id)
           .then(() => {
             this.getData();
           })
