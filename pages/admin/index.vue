@@ -102,6 +102,7 @@ export default {
       this.$axios.get("/auth/order")
           .then(response => {
             this.orders = response.data.data;
+            console.log(this.orders, 'this.orders')
           }).catch(error => {
         console.log(error.response, 'error.response');
       });
