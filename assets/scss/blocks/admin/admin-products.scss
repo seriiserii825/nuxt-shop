@@ -1,0 +1,29 @@
+.admin-products {
+  &__item {
+    display: flex;
+    margin-bottom: 3rem;
+    padding: 1rem 1rem 3rem;
+    box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.2);
+  }
+  &__img {
+    flex: 0 0 10rem;
+    margin-right: 4rem;
+  }
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+  }
+  &__title {
+    color: #1755c7;
+  }
+  &__price {
+    font-weight: bold;
+    color: #9b9b03;
+  }
+  &__description {
+    font-size: 1.5rem;
+    line-height: 1.3;
+  }
+}

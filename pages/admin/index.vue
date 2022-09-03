@@ -56,16 +56,17 @@
                     span.badge(:class="{'badge--success': item.status === '0', 'badge--error': item.status === '2'}") {{orderStatus(item.status)}}
                   td {{item.sum}}
       .admin__column
-        AdminForm(label="Categories")
-          AdminTable
-            table
-              thead
-                tr
-                  th #ID
-                  th Name
-                  th Status
-                  th Updated At
-              tbody
+        AdminForm(label="Last products")
+          .admin-products(v-if="products && products.length")
+            nuxt-link(:to="`/admin/product/${item.id}`").admin-products__item(v-for="item in products" :key="item.id")
+              .admin-products__img
+                img(:src="adminProductsImage()" alt="no image")
+              .admin-products__content
+                header.admin-products__header
+                  h3.admin-products__title {{item.title}}
+                  .admin-products__price
+                    strong {{ item.price }}$
+                .admin-products__description {{ item.description }}
 </template>
 
 <script>
@@ -79,7 +80,8 @@ export default {
       products_count: 0,
       users_count: 0,
       categories_count: 0,
-      orders: []
+      orders: [],
+      products: []
     };
   },
   methods: {
@@ -104,6 +106,14 @@ export default {
         console.log(error.response, 'error.response');
       });
     },
+    getProducts() {
+      this.$axios.get("/auth/product")
+          .then(response => {
+            this.products = response.data.data;
+          }).catch(error => {
+        console.log(error.response, 'error.response');
+      });
+    },
     orderStatus(status) {
       switch (status) {
         case "0":
@@ -113,6 +123,9 @@ export default {
         case "2":
           return "Deleted"
       }
+    },
+    adminProductsImage() {
+      return '/images/no-image.jpg';
     }
   },
   components: {
@@ -121,6 +134,7 @@ export default {
   created() {
     this.getAdminWidgets();
     this.getOrders();
+    this.getProducts();
   },
 };
 </script>
