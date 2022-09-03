@@ -1,49 +1,35 @@
-<template>
-  <AdminForm label="Categories">
-    <AdminTable>
-      <div class="search">
-        <label for="search">Search:</label>
-        <input type="text" v-model="search" />
-      </div>
-      <table>
-        <thead>
-          <tr>
-            <th>#ID</th>
-            <th>Name</th>
-            <th>Status</th>
-            <th>Updated At</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="item in data" :key="item.id">
-            <td>{{ item.id }}</td>
-            <td>{{ item.name }}</td>
-            <td>
-              <span class="badge" :class="badgeClass(item)">
-                {{ item.status }}
-              </span>
-            </td>
-            <td>{{ formatDate(item.updated_at) }}</td>
-            <td>
-              <nuxt-link class="btn btn--success" :to="`/category/` + item.id"
-                >Edit</nuxt-link
-              >
-              <button class="btn btn--danger" @click="deleteItem(item.id)">
-                Delete
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </AdminTable>
-  </AdminForm>
+<template lang="pug">
+AdminForm(label="Categories")
+  AdminTable
+    .search
+      label(for="search") Search:
+      input(type="text", v-model="search")
+    table
+      thead
+        tr
+          th #ID
+          th Name
+          th Status
+          th Updated At
+          th Action
+      tbody
+        tr(v-for="item in data", :key="item.id")
+          td {{ item.id }}
+          td {{ item.name }}
+          td
+            span.badge(:class="badgeClass(item)")
+              | {{ item.status }}
+          td {{ formatDate(item.updated_at) }}
+          td
+            nuxt-link.btn.btn--success(:to="`/category/` + item.id") Edit
+            button.btn.btn--danger(@click="deleteItem(item.id)")
+              | Delete
 </template>
 <script>
 import AdminForm from "@/admin/form/Form.vue";
 import AdminTable from "@/admin/form/AdminTable.vue";
 export default {
-  layout: 'admin',
+  layout: "admin",
   data() {
     return {
       search: "",
