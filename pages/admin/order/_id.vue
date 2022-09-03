@@ -1,5 +1,5 @@
 <template lang="pug">
-  AdminForm(label='Create category')
+  AdminForm(label='Create order')
     .form__flex
       .form__item
         label.form__label(for='user_id')  User
@@ -103,9 +103,7 @@ export default {
       this.$axios
           .get("/auth/user")
           .then((res) => {
-            console.log(res.data.data, 'res.data.data')
             this.users = res.data.data;
-            console.log(this.users, 'this.users')
           })
           .catch((err) => {
             if (err.response.data && err.response.data.errors) {
