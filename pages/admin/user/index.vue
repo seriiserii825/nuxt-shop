@@ -1,5 +1,5 @@
 <template lang="pug">
-  AdminForm(label='Orders')
+  AdminForm(label='Categories')
     AdminTable
       .search
         label(for='search') Search:
@@ -8,24 +8,18 @@
         thead
           tr
             th #ID
-            th User
-            th Status
-            th Sum
-            th Updated At
-            th Created At
+            th Name
+            th email
+            th Role
             th Action
         tbody
           tr(v-for='item in data', :key='item.id')
             td {{ item.id }}
-            td {{ item.user.name }}
+            td {{ item.name }}
+            td {{ item.email }}
+            td {{ item.role }}
             td
-              span.badge(:class='badgeClass(item)')
-                | {{ orderStatus(item.status) }}
-            td {{ item.sum }}
-            td {{ formatDate(item.updated_at) }}
-            td {{ formatDate(item.created_at) }}
-            td
-              nuxt-link.btn.btn--success(:to='`/admin/order/` + item.id') Edit
+              nuxt-link.btn.btn--success(:to='`/admin/user/` + item.id') Edit
               button.btn.btn--danger(@click='deleteItem(item.id)')
                 | Delete
 </template>
@@ -71,7 +65,7 @@ export default {
     },
     getData() {
       this.$axios
-          .get("/auth/order")
+          .get("/auth/user-get-all")
           .then((res) => {
             this.data = res.data.data.reverse();
           })
@@ -81,23 +75,13 @@ export default {
     },
     deleteItem(id) {
       this.$axios
-          .delete("/auth/order/" + id)
+          .delete("/auth/user/" + id)
           .then(() => {
             this.getData();
           })
           .catch((err) => {
             console.log(err.response.data.message, "err.response");
           });
-    },
-    orderStatus(status) {
-      switch (status) {
-        case "0":
-          return "New";
-        case "1":
-          return "Finished"
-        case "2":
-          return "Deleted"
-      }
     },
   },
   created() {
