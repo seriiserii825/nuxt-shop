@@ -1,6 +1,10 @@
 <template lang="pug">
-  AdminForm(label="Edit attribute")
+  AdminForm(label="Create attribute")
     .form__flex
+      .form__item
+        label.form__label(for="attr_group_id") Attributes
+        select#attr_group_id(v-model="attr_group_id")
+          option(v-for="item in attributes" :key="item.id" :value="item.id") {{ item.title }}
       .form__item(:class="{ 'form__item--error': errors.title }")
         label.form__label(for="title") Title
         input(type="text", placeholder="Enter title...", v-model="title")
@@ -17,18 +21,19 @@ export default {
     return {
       id: "",
       title: "",
+      attr_group_id: "",
       errors: {},
+      attributes: []
     };
   },
   methods: {
     onSubmit(e) {
       e.preventDefault();
-      const data = {title: this.title};
-
+      const data = {title: this.title, attr_group_id: this.attr_group_id};
       this.$axios
-          .put("/auth/attribute/" + this.id, data)
+          .put("/auth/attribute-value/" + this.id, data)
           .then((res) => {
-            this.$router.push("/admin/attribute");
+            this.$router.push("/admin/attribute-value");
           })
           .catch((err) => {
             if (err.response.data && err.response.data.errors) {
@@ -36,22 +41,36 @@ export default {
             }
           });
     },
-    getData() {
+    getAttributes() {
       this.$axios
-          .get("/auth/attribute/" + this.id)
+          .get("/auth/attribute")
           .then((res) => {
-            this.title = res.data.data.title;
+            this.attributes = res.data.data.reverse();
+            this.attr_group_id = this.attributes[0].id;
           })
           .catch((err) => {
             console.log(err.response, "err.response");
           });
     },
+    getData() {
+      this.$axios
+          .get(`/auth/attribute-value/${this.id}`)
+          .then((res) => {
+            console.log(res.data.data, 'res.data.data')
+            this.title = res.data.data.title;
+            this.attr_group_id = res.data.data.attr_group_id;
+          })
+          .catch((err) => {
+            console.log(err.response, "err.response");
+          });
+    }
   },
   components: {
     AdminForm,
   },
   created() {
     this.id = this.$route.params.id;
+    this.getAttributes();
     this.getData();
   },
 };

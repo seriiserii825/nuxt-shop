@@ -7,7 +7,6 @@
             th #ID
             th Title
             th Values
-            th Action
         tbody
           tr(v-for='item in data', :key='item.id')
             td {{ item.id }}
@@ -15,10 +14,9 @@
             td
               ul.admin-table__list
                 li(v-for='value in item.values')
-                  nuxt-link(:to='`/admin/attribute-value/` + item.id') {{ value.value }}
-            td
-              button.btn.btn--danger(@click='deleteItem(item.id)')
-                | Delete
+                  nuxt-link(:to='`/admin/attribute-value/` + value.id') {{ value.title }}
+                  button.btn.btn--danger(@click='deleteItem(value.id)')
+                    | Delete
 </template>
 <script>
 import AdminForm from "@/admin/form/Form.vue";
@@ -48,7 +46,7 @@ export default {
     },
     deleteItem(id) {
       this.$axios
-          .delete("/auth/attribute/" + id)
+          .delete("/auth/attribute-value/" + id)
           .then(() => {
             this.getData();
           })
