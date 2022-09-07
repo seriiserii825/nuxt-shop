@@ -34,24 +34,32 @@ AdminForm(label="Edit category")
         | {{ errors.price[0] }}
     .form__item(:class="{ 'form__item--error': errors.old_price }")
       label.form__label(for="old_price") Old price
-      input(v-model="old_price")
+      input(type="text", v-model="old_price")
       p.text-error(v-if="errors && errors.old_price")
         | {{ errors.old_price[0] }}
   .form__flex
-    .form__item(:class="{ 'form__item--error': errors.price }")
-      label.form__label(for="price") Price
-      input(type="text", v-model="price")
-      p.text-error(v-if="errors && errors.price")
-        | {{ errors.price[0] }}
     .form__item(:class="{ 'form__item--error': errors.hit }")
       label.form__label(for="hit") 
         input#hit(type="checkbox", v-model="hit", value="0") 
         | Hit
-    p.text-error(v-if="errors && errors.hit")
-      | {{ errors.hit[0] }}
+      p.text-error(v-if="errors && errors.hit")
+        | {{ errors.hit[0] }}
+    .form__item
+      label.form__label(htmlfor="img") Cover image
+      button.btn.btn--success(@click="coverImageHandler")
+        | Add image
+      p.form__url(v-if="img") {{ img }}
+      p.text-error(v-if="errors.img")
+        | {{ errors.img[0] }}
+  AdminMedia(
+    v-if="showMedia",
+    @on-close="closeMedia",
+    @on-images="setMediaImages"
+  )
   button.btn(@click="onSubmit") Submit
 </template>
 <script>
+import AdminMedia from "@/admin/media/AdminMedia.vue";
 import AdminForm from "@/admin/form/Form";
 export default {
   layout: "admin",
@@ -68,6 +76,8 @@ export default {
       hit: "0",
       errors: {},
       categories: [],
+      showMedia: false,
+      images: []
     };
   },
   methods: {
@@ -105,9 +115,22 @@ export default {
         console.log(this.categories, "this.categories");
       });
     },
+    closeMedia() {
+      document.body.style.overflow = "initial";
+      this.showMedia = false;
+    },
+    setMediaImages(images) {
+      this.media_images = images;
+      this.img = images[0];
+    },
+    coverImageHandler() {
+      document.body.style.overflow = "hidden";
+      this.showMedia = true;
+    },
   },
   components: {
     AdminForm,
+    AdminMedia,
   },
   created() {
     this.getCategories();
