@@ -1,5 +1,5 @@
 <template lang="pug">
-  AdminForm(label='Orders')
+  AdminForm(label='Products')
     AdminTable
       table
         thead
@@ -18,7 +18,7 @@
             td {{ item.price }}
             td {{ item.status === '1' ? 'On' : 'Off' }}
             td
-              nuxt-link.btn.btn--success(:to='`/admin/order/` + item.id') Edit
+              nuxt-link.btn.btn--success(:to='`/admin/product/` + item.id') Edit
               button.btn.btn--danger(@click='deleteItem(item.id)')
                 | Delete
 </template>

@@ -10,6 +10,8 @@ AdminForm(label="Edit category")
       label.form__label(for="category_id") Category
       select#category_id(name="category_id", v-model="category_id")
         option(v-for="item in categories", :key="item.id", :value="item.id") {{ item.title }}
+      p.text-error(v-if="errors && errors.category_id")
+        | {{ errors.category_id[0] }}
   .form__item(:class="{ 'form__item--error': errors.content }")
     label.form__label(for="content") Content
     mavon-editor(v-model="content", language="en")
@@ -67,6 +69,7 @@ export default {
     return {
       title: "",
       category_id: "",
+      brand_id: 1,
       content: "",
       price: 0,
       old_price: 0,
@@ -86,6 +89,7 @@ export default {
       const data = {
         title: this.title,
         category_id: this.category_id,
+        brand_id: this.brand_id,
         content: this.content,
         price: this.price,
         old_price: this.old_price,
@@ -98,7 +102,7 @@ export default {
       this.$axios
         .post("/auth/product", data)
         .then((res) => {
-          this.$router.push("/category");
+          /* this.$router.push("/category"); */
         })
         .catch((err) => {
           if (err.response.data && err.response.data.errors) {
