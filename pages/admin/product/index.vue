@@ -45,7 +45,7 @@ export default {
       this.$axios
         .get("/auth/product")
         .then((res) => {
-          this.data = res.data.data.reverse();
+          this.data = res.data.data;
         })
         .catch((err) => {
           console.log(err.response, "err.response");

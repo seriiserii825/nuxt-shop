@@ -12,12 +12,14 @@
           option(v-for="item in categories", :key="item.id", :value="item.id") {{ item.title }}
         p.text-error(v-if="errors && errors.category_id")
           | {{ errors.category_id[0] }}
+
     .form__item(:class="{ 'form__item--error': errors.content }")
       label.form__label(for="content") Content
       client-only
         mavon-editor(v-model="content", language="en")
       p.text-error(v-if="errors && errors.content")
         | {{ errors.content[0] }}
+
     .form__flex
       .form__item(:class="{ 'form__item--error': errors.description }")
         label.form__label(for="description") Description
@@ -29,6 +31,7 @@
         select#status(name="status", v-model="status")
           option(:value="1") Active
           option(:value="0") Inactive
+
     .form__flex
       .form__item(:class="{ 'form__item--error': errors.price }")
         label.form__label(for="price") Price
@@ -40,6 +43,7 @@
         input(type="text", v-model="old_price")
         p.text-error(v-if="errors && errors.old_price")
           | {{ errors.old_price[0] }}
+
     .form__flex
       .form__item(:class="{ 'form__item--error': errors.hit }")
         label.form__label(for="hit")
