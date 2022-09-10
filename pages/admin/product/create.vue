@@ -14,7 +14,8 @@
           | {{ errors.category_id[0] }}
     .form__item(:class="{ 'form__item--error': errors.content }")
       label.form__label(for="content") Content
-      mavon-editor(v-model="content", language="en")
+      client-only
+        mavon-editor(v-model="content", language="en")
       p.text-error(v-if="errors && errors.content")
         | {{ errors.content[0] }}
     .form__flex
@@ -86,6 +87,7 @@ export default {
       description: "",
       img: "",
       hit: "0",
+      relations: [],
       errors: {},
       categories: [],
       showMedia: false,
@@ -93,8 +95,9 @@ export default {
     };
   },
   methods: {
-    searchHandler(search) {
-      console.log(search, 'search');
+    searchHandler(relations) {
+      this.relations = relations.map(item => item.id);
+      console.log(this.relations, 'this.relations');
     },
     onSubmit(e) {
       e.preventDefault();
@@ -109,6 +112,7 @@ export default {
         description: this.description,
         img: this.img,
         hit: this.hit,
+        related: this.relations
       };
 
       this.$axios
