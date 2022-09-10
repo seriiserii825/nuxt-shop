@@ -51,13 +51,6 @@
           | Hit
         p.text-error(v-if="errors && errors.hit")
           | {{ errors.hit[0] }}
-      .form__item
-        label.form__label(htmlfor="img") Cover image
-        button.btn.btn--success(@click="coverImageHandler")
-          | Add image
-        p.form__url(v-if="img") {{ img }}
-        p.text-error(v-if="errors.img")
-          | {{ errors.img[0] }}
 
     .form__item
       label.form__label Related products
@@ -69,13 +62,42 @@
     .form__item
       label.form__label Filters(Attributes)
       AttributeComponent(url="/auth/attribute", @on-change="attributeHandler")
+
+    .form__flex
+      .form__item
+        label.form__label(for="img") Cover image
+        button.btn.btn--success(@click="coverImageHandler")
+          | Add image
+        br
+        br
+        div
+          img(v-if="img" :src="`${server_url}${img}`" :width="100" alt="item")
+        p.text-error(v-if="errors.img")
+          | {{ errors.img[0] }}
+
+      .form__item
+        label.form__label Gallery
+        button.btn.btn--success(@click="galleryHandler")
+          | Add image
+        ul.form__gallery(v-if="gallery.length")
+          li(v-for="item in gallery" :key="item")
+            img(:src="`${server_url}${item}`" :width="100" alt="item")
+
     AdminMedia(
       v-if="showMedia",
       @on-close="closeMedia",
       @on-images="setMediaImages"
     )
 
+    AdminMedia(
+      v-if="showMediaGallery",
+      @on-close="closeMedia",
+      @on-gallery="setMediaGallery"
+      :is_gallery="true"
+    )
+
     button.btn.form__submit(@click="onSubmit") Submit
+
 </template>
 <script>
 import AdminMedia from "@/admin/media/AdminMedia.vue";
@@ -97,11 +119,13 @@ export default {
       status: 1,
       description: "",
       img: "",
+      gallery: [],
       hit: "0",
       relations: [],
       errors: {},
       categories: [],
       showMedia: false,
+      showMediaGallery: false,
       images: [],
       attributes: []
     };
@@ -132,7 +156,7 @@ export default {
       this.$axios
           .post("/auth/product", data)
           .then((res) => {
-            /* this.$router.push("/category"); */
+             this.$router.push("/admin/product");
           })
           .catch((err) => {
             if (err.response.data && err.response.data.errors) {
@@ -151,15 +175,31 @@ export default {
     closeMedia() {
       document.body.style.overflow = "initial";
       this.showMedia = false;
+      this.showMediaGallery = false;
     },
     setMediaImages(images) {
       this.media_images = images;
       this.img = images[0];
     },
+    setMediaGallery(images) {
+      console.log(images, 'images');
+      this.media_images = images;
+      this.gallery = images;
+      console.log(this.gallery, 'this.gallery')
+    },
     coverImageHandler() {
       document.body.style.overflow = "hidden";
       this.showMedia = true;
     },
+    galleryHandler() {
+      document.body.style.overflow = "hidden";
+      this.showMediaGallery = true;
+    }
+  },
+  computed: {
+    server_url() {
+      return this.$store.state.server_url;
+    }
   },
   components: {
     AutoComplete,

@@ -104,5 +104,13 @@
   &__submit {
     margin-top: 3rem;
   }
+  &__gallery {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+    li {
+      margin: 0.4rem;
+    }
+  }
 }
 
