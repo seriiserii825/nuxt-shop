@@ -1,0 +1,27 @@
+.attribute-component {
+  &__tabs {
+    display: flex;
+  }
+  &__tab {
+    margin: 0 0.1rem;
+    padding: 1rem 2rem;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    &--active {
+      color: white;
+      background: $accent;
+    }
+  }
+  &__item {
+    display: none;
+    padding: 3rem;
+    &--active {
+      display: block;
+    }
+    li {
+      display: flex;
+      margin-bottom: 1rem;
+      cursor: pointer;
+    }
+  }
+}

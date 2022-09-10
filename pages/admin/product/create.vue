@@ -61,8 +61,14 @@
 
     .form__item
       label.form__label Related products
-      AutoComplete(@on-select="searchHandler" url="/auth/product-search?search=")
+      AutoComplete(
+        @on-select="searchHandler",
+        url="/auth/product-search?search="
+      )
 
+    .form__item
+      label.form__label Filters(Attributes)
+      AttributeComponent(url="/auth/attribute", @on-change="attributeHandler")
     AdminMedia(
       v-if="showMedia",
       @on-close="closeMedia",
@@ -75,6 +81,7 @@
 import AdminMedia from "@/admin/media/AdminMedia.vue";
 import AdminForm from "@/admin/form/Form";
 import AutoComplete from "@/admin/utils/AutoComplete";
+import AttributeComponent from "@/admin/utils/AtributeComponent";
 
 export default {
   layout: "admin",
@@ -95,13 +102,16 @@ export default {
       errors: {},
       categories: [],
       showMedia: false,
-      images: []
+      images: [],
+      attributes: []
     };
   },
   methods: {
+    attributeHandler(result) {
+      this.attributes = Object.values(result);
+    },
     searchHandler(relations) {
-      this.relations = relations.map(item => item.id);
-      console.log(this.relations, 'this.relations');
+      this.relations = relations.map((item) => item.id);
     },
     onSubmit(e) {
       e.preventDefault();
@@ -116,7 +126,7 @@ export default {
         description: this.description,
         img: this.img,
         hit: this.hit,
-        related: this.relations
+        related: this.relations,
       };
 
       this.$axios
@@ -136,7 +146,6 @@ export default {
         this.categories = this.categories.filter((item) => {
           return item.parent_id !== 0;
         });
-        console.log(this.categories, "this.categories");
       });
     },
     closeMedia() {
@@ -156,6 +165,7 @@ export default {
     AutoComplete,
     AdminForm,
     AdminMedia,
+    AttributeComponent
   },
   created() {
     this.getCategories();

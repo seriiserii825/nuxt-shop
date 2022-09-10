@@ -32,12 +32,12 @@
   &__flex {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 3rem;
     .form__item {
       width: 45%;
     }
   }
   &__item {
+    margin-bottom: 3rem;
     &.form__item--error {
       input {
         border-color: red;
