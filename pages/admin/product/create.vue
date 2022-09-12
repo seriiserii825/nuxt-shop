@@ -1,5 +1,5 @@
 <template lang="pug">
-  AdminForm(label="Edit category")
+  AdminForm(label="Create Product")
     .form__flex
       .form__item(:class="{ 'form__item--error': errors.title }")
         label.form__label(for="title") Title
@@ -127,7 +127,7 @@ export default {
       showMedia: false,
       showMediaGallery: false,
       images: [],
-      attributes: []
+      attributes: [],
     };
   },
   methods: {
@@ -136,6 +136,7 @@ export default {
     },
     searchHandler(relations) {
       this.relations = relations.map((item) => item.id);
+      console.log(this.relations, 'this.relations');
     },
     onSubmit(e) {
       e.preventDefault();
@@ -148,21 +149,23 @@ export default {
         old_price: this.old_price,
         status: this.status,
         description: this.description,
+        gallery: JSON.stringify(this.gallery),
         img: this.img,
         hit: this.hit,
-        related: this.relations,
+        related: JSON.stringify(this.relations),
       };
+      console.log(data, 'data');
 
-      this.$axios
-          .post("/auth/product", data)
-          .then((res) => {
-             this.$router.push("/admin/product");
-          })
-          .catch((err) => {
-            if (err.response.data && err.response.data.errors) {
-              this.errors = err.response.data.errors;
-            }
-          });
+      // this.$axios
+      //   .post("/auth/product", data)
+      //   .then((res) => {
+      //     this.$router.push("/admin/product");
+      //   })
+      //   .catch((err) => {
+      //     if (err.response.data && err.response.data.errors) {
+      //       this.errors = err.response.data.errors;
+      //     }
+      //   });
     },
     getCategories() {
       this.$axios.get("/auth/category").then((res) => {
@@ -182,10 +185,10 @@ export default {
       this.img = images[0];
     },
     setMediaGallery(images) {
-      console.log(images, 'images');
+      console.log(images, "images");
       this.media_images = images;
       this.gallery = images;
-      console.log(this.gallery, 'this.gallery')
+      console.log(this.gallery, "this.gallery");
     },
     coverImageHandler() {
       document.body.style.overflow = "hidden";
@@ -194,18 +197,18 @@ export default {
     galleryHandler() {
       document.body.style.overflow = "hidden";
       this.showMediaGallery = true;
-    }
+    },
   },
   computed: {
     server_url() {
       return this.$store.state.server_url;
-    }
+    },
   },
   components: {
     AutoComplete,
     AdminForm,
     AdminMedia,
-    AttributeComponent
+    AttributeComponent,
   },
   created() {
     this.getCategories();
