@@ -135,8 +135,7 @@ export default {
       this.attributes = Object.values(result);
     },
     searchHandler(relations) {
-      this.relations = relations.map((item) => item.id);
-      console.log(this.relations, 'this.relations');
+      this.relations = relations;
     },
     onSubmit(e) {
       e.preventDefault();
@@ -154,18 +153,17 @@ export default {
         hit: this.hit,
         related: JSON.stringify(this.relations),
       };
-      console.log(data, 'data');
 
-      // this.$axios
-      //   .post("/auth/product", data)
-      //   .then((res) => {
-      //     this.$router.push("/admin/product");
-      //   })
-      //   .catch((err) => {
-      //     if (err.response.data && err.response.data.errors) {
-      //       this.errors = err.response.data.errors;
-      //     }
-      //   });
+      this.$axios
+        .post("/auth/product", data)
+        .then((res) => {
+          this.$router.push("/admin/product");
+        })
+        .catch((err) => {
+          if (err.response.data && err.response.data.errors) {
+            this.errors = err.response.data.errors;
+          }
+        });
     },
     getCategories() {
       this.$axios.get("/auth/category").then((res) => {

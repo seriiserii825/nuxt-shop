@@ -57,6 +57,7 @@
       AutoComplete(
         @on-select="searchHandler",
         url="/auth/product-search?search="
+        :defaultValues="relations"
       )
 
     .form__item
@@ -135,7 +136,7 @@ export default {
       this.attributes = Object.values(result);
     },
     searchHandler(relations) {
-      this.relations = relations.map((item) => item.id);
+      this.relations = relations;
     },
     onSubmit(e) {
       e.preventDefault();
@@ -198,8 +199,9 @@ export default {
         this.gallery = gallery;
         this.img = img;
         this.hit = hit;
-        this.related = related;
-        console.log(res.data.data, "res.data.data");
+        this.searchHandler(related);
+        this.relations = JSON.parse(related);
+        console.log(this.relations, 'this.relations');
       });
     },
     closeMedia() {

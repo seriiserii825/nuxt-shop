@@ -11,58 +11,69 @@
         | {{ item.title }}
 </template>
 <script>
-import ClickOutside from 'vue-click-outside';
+import ClickOutside from "vue-click-outside";
 
 export default {
   props: {
     url: {
       type: String,
-      default: ""
-    }
+      default: "",
+    },
+    defaultValues: {
+      type: Array,
+      default: () => [],
+    },
   },
   data() {
     return {
       search: "",
       show_list: false,
       items: [],
-      selected: []
-    }
+      selected: [],
+    };
   },
   methods: {
     searchFocus() {
       this.show_list = this.items.length > 0;
     },
     removeHandler(item) {
-      this.selected = this.selected.filter(i => i.id !== item.id)
+      this.selected = this.selected.filter((i) => i.id !== item.id);
     },
-    hideList(){
+    hideList() {
       this.show_list = false;
     },
     searchHandler() {
       this.$axios
-          .get(this.url + this.search)
-          .then(res => {
-            this.items = res.data.data.filter(item => {
-              return !this.selected.find(el => el.id === item.id)
-            })
-            this.show_list = this.items.length > 0;
-            // this.$emit("on-search", res.data);
-          })
-          .catch(err => {
-            console.log(err);
+        .get(this.url + this.search)
+        .then((res) => {
+          this.items = res.data.data.filter((item) => {
+            return !this.selected.find((el) => el.id === item.id);
           });
+          this.show_list = this.items.length > 0;
+          // this.$emit("on-search", res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     selectHandler(item) {
       this.selected.push(item);
       this.$emit("on-select", this.selected);
-      this.items = this.items.filter(el => el.id !== item.id);
+      this.items = this.items.filter((el) => el.id !== item.id);
       this.show_list = this.items.length > 0;
-    }
+    },
   },
   directives: {
-    ClickOutside
-  }
-}
+    ClickOutside,
+  },
+  watch: {
+    defaultValues: {
+      handler: function (val) {
+        this.selected = val;
+      },
+      deep: true,
+    },
+  },
+};
 </script>
-<style lang="scss">
-</style>
+<style lang="scss"></style>
