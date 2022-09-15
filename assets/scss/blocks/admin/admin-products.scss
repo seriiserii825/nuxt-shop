@@ -9,6 +9,9 @@
     flex: 0 0 10rem;
     margin-right: 4rem;
   }
+  &__content {
+    flex: 1;
+  }
   &__header {
     display: flex;
     justify-content: space-between;

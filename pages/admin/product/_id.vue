@@ -62,7 +62,11 @@ AdminForm(label="Edit product")
 
   .form__item
     label.form__label Filters(Attributes)
-    AttributeComponent(url="/auth/attribute", @on-change="attributeHandler", :attrs="attributes")
+    AttributeComponent(
+      url="/auth/attribute",
+      @on-change="attributeHandler",
+      :attrs="attributes"
+    )
 
   .form__flex
     .form__item
@@ -80,8 +84,8 @@ AdminForm(label="Edit product")
       label.form__label Gallery
       button.btn.btn--success(@click="galleryHandler")
         | Add image
-      ul.form__gallery(v-if="gallery && gallery.length")
-        li(v-for="item in gallery", :key="item")
+      ul.form__gallery(v-if="gallery && gallery.length > 0")
+        li(v-for="(item, index) in gallery", :key="index")
           img(:src="`${server_url}${item}`", :width="100", alt="item")
 
   AdminMedia(
@@ -109,6 +113,7 @@ export default {
   layout: "admin",
   data() {
     return {
+      id: null,
       search: "",
       title: "",
       category_id: "",
@@ -133,7 +138,6 @@ export default {
   methods: {
     attributeHandler(result) {
       this.attributes = Object.values(result);
-      console.log(this.attributes, "this.attributes");
     },
     searchHandler(relations) {
       this.relations = relations;
@@ -149,14 +153,14 @@ export default {
         old_price: this.old_price,
         status: this.status,
         description: this.description,
-        gallery: json_encode(this.gallery),
+        gallery: this.gallery,
         img: this.img,
         hit: this.hit,
         related: this.relations,
       };
 
       this.$axios
-        .post("/auth/product", data)
+        .put("/auth/product/"+this.id, data)
         .then((res) => {
           this.$router.push("/admin/product");
         })
@@ -197,13 +201,12 @@ export default {
         this.old_price = old_price;
         this.status = status;
         this.description = description;
-        this.gallery = gallery;
+        this.gallery = JSON.parse(gallery);
         this.img = img;
         this.hit = hit;
         this.searchHandler(related);
         this.relations = JSON.parse(related);
         this.attributes = attributes;
-        console.log(this.attributes, "this.attributes");
       });
     },
     closeMedia() {
