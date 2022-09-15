@@ -133,6 +133,7 @@ export default {
   methods: {
     attributeHandler(result) {
       this.attributes = Object.values(result);
+      console.log(this.attributes, "this.attributes");
     },
     searchHandler(relations) {
       this.relations = relations;

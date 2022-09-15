@@ -50,7 +50,6 @@ export default {
     uncheck(title) {
       this.values[title] = false;
       delete this.result[title];
-      console.log(this.result, "this.result");
     },
     changeHandler(data) {
       this.result[data.title] = data.value;
@@ -61,11 +60,6 @@ export default {
         this.attributes = res.data.data;
         this.values = this.attributes.map((item) => item.title);
       });
-    },
-  },
-  watch: {
-    attrs(value) {
-      this.attributes = value;
     },
   },
   created() {
