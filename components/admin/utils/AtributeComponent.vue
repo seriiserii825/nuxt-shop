@@ -44,6 +44,7 @@ export default {
       activeTab: 0,
       values: {},
       result: {},
+      groups: {},
     };
   },
   methods: {
@@ -58,7 +59,17 @@ export default {
     getAttributes() {
       this.$axios.get(this.url).then((res) => {
         this.attributes = res.data.data;
-        this.values = this.attributes.map((item) => item.title);
+        this.attributes.forEach((item) => {
+          this.values[item.title] = false;
+          this.groups[item.title] = item.id;
+        });
+        this.attrs.forEach((item) => {
+          this.groups.forEach((group) => {
+            if (group.id === item.attr_group_id) {
+              this.values[group.title] = item.id;
+            }
+          });
+        });
       });
     },
   },
