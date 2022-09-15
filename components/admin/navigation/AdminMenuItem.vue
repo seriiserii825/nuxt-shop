@@ -36,6 +36,7 @@
             >View list</nuxt-link
           >
         </li>
+        <slot></slot>
       </ul>
     </div>
   </li>
@@ -73,7 +74,7 @@ export default {
   created() {
     if (this.items && this.items.length) {
       this.isActive = this.items.some((item) => item.url === this.$route.path);
-    }else{
+    } else {
       this.isActive = false;
     }
   },
