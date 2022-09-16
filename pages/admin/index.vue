@@ -144,7 +144,7 @@ export default {
       }
     },
     adminProductsImage(img) {
-      return `${this.server_url}${img}`;
+      return `${this.server_url}/uploads/${img}`;
     },
   },
   components: {

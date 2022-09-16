@@ -118,7 +118,6 @@ export default {
       status: 1,
       description: "",
       img: "",
-      gallery: [],
       hit: "0",
       relations: [],
       errors: {},
@@ -126,6 +125,7 @@ export default {
       showMedia: false,
       showMediaGallery: false,
       images: [],
+      gallery: [],
       attributes: [],
     };
   },

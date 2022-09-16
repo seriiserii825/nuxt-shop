@@ -76,7 +76,12 @@ AdminForm(label="Edit product")
       br
       br
       div
-        img(v-if="img", :src="`${server_url}${img}`", :width="100", alt="item")
+        img(
+          v-if="img",
+          :src="`${server_url}/uploads/${img}`",
+          :width="100",
+          alt="item"
+        )
       p.text-error(v-if="errors.img")
         | {{ errors.img[0] }}
 
@@ -157,10 +162,12 @@ export default {
         img: this.img,
         hit: this.hit,
         related: this.relations,
+        gallery: JSON.stringify(this.gallery),
+        attributes: JSON.stringify(this.attributes),
       };
 
       this.$axios
-        .put("/auth/product/"+this.id, data)
+        .put("/auth/product/" + this.id, data)
         .then((res) => {
           this.$router.push("/admin/product");
         })
@@ -207,6 +214,8 @@ export default {
         this.searchHandler(related);
         this.relations = JSON.parse(related);
         this.attributes = attributes;
+        console.log(this.attributes, "this.attributes");
+        console.log(this.gallery, "this.gallery");
       });
     },
     closeMedia() {
