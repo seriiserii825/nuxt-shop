@@ -151,7 +151,7 @@ export default {
         img: this.img,
         hit: this.hit,
         related: JSON.stringify(this.relations),
-        attributes: this.attributes
+        attributes: JSON.stringify(this.attributes),
       };
 
       this.$axios
