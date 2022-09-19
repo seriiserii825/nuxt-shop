@@ -6,7 +6,7 @@
           <nuxt-link :to="`/category/${item.id}`">{{ item.title }}</nuxt-link>
           <ul class="category-menu__sub" v-if="item.children.length">
             <li v-for="child in item.children" :key="child.id">
-              <nuxt-link :to="`/category/${item.id}/${child.id}`">{{
+              <nuxt-link :to="`/category/${child.id}`">{{
                 child.title
               }}</nuxt-link>
             </li>
@@ -37,6 +37,7 @@
         </li>
       </ul>
     </div>
+    <Nuxt/>
   </div>
 </template>
 <script>
