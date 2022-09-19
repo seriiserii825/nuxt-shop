@@ -165,6 +165,9 @@ export default {
         gallery: JSON.stringify(this.gallery),
         attributes: JSON.stringify(this.attributes),
       };
+      this.attributes = this.attributes.map((item) => {
+        return item.id;
+      });
 
       this.$axios
         .put("/auth/product/" + this.id, data)

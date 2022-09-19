@@ -1,0 +1,41 @@
+.category-menu {
+  display: flex;
+  align-items: center;
+  & > li {
+    position: relative;
+    margin: 0 3rem;
+    padding: 1rem 2rem;
+    &:hover {
+      .category-menu__sub {
+        opacity: 1;
+        pointer-events: initial;
+      }
+    }
+  }
+  &__sub {
+    position: absolute;
+    top: 4rem;
+    left: 0;
+    display: block;
+    padding: 2rem;
+    width: 14rem;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.4s;
+    li:not(:last-of-type) {
+      a {
+        margin-bottom: 1rem;
+      }
+    }
+    a {
+      font-size: 1.2rem;
+      text-transform: capitalize;
+    }
+  }
+  a {
+    display: block;
+    text-transform: uppercase;
+  }
+}

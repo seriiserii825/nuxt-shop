@@ -1,4 +1,6 @@
-<template lang="pug"></template>
+<template lang="pug">
+h3 some
+</template>
 <script>
 export default {
   name: "IndexPage",
