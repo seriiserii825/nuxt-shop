@@ -6,7 +6,8 @@
           <nuxt-link to="/">Home</nuxt-link>
         </li>
         <li v-if="parent_menu">
-          <nuxt-link :to="`/category/${parent_menu.id}`">{{ parent_menu.title }}</nuxt-link>
+          <nuxt-link v-if="Object.keys(children_menu).length !== 0" :to="`/category/${parent_menu.id}`">{{ parent_menu.title }}</nuxt-link>
+          <span v-else>{{ parent_menu.title }}</span>
         </li>
         <li v-if="children_menu">
           <span>{{ children_menu.title }}</span>
@@ -45,6 +46,10 @@ export default {
               this.parent_menu = parent_array[0] ? {id: parent_array[0].id, title: parent_array[0].title} : null;
             } else {
               const children_array = this.categories.filter(item => item.id === this.id);
+
+              const parent_array = parents.filter(item => item.id === children_array[0].parent_id);
+              this.parent_menu = parent_array[0] ? {id: parent_array[0].id, title: parent_array[0].title} : null;
+
               this.children_menu = children_array[0] ? {
                 id: children_array[0].id,
                 title: children_array[0].title
