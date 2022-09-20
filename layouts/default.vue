@@ -145,7 +145,7 @@ export default {
               };
               return result;
             });
-            console.log(this.categories, "this.categories");
+            // console.log(this.categories, "this.categories");
           })
           .catch((err) => {
             console.log(err);
