@@ -1,0 +1,55 @@
+.product-loop-item {
+  background: #f2f2f2;
+  transition: all .4s;
+  border: 1px solid #e4e4e4;
+  &:hover {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    .product-loop-item__img {
+      img {
+        transform: scale(1.1);
+      }
+    }
+  }
+  &__img {
+    position: relative;
+    height: 39rem;
+    transition: all .4s;
+    overflow: hidden;
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transition: all .4s;
+      object-fit: cover;
+    }
+  }
+  &__content {
+    padding: 2rem;
+  }
+  &__title {
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+  }
+  a {
+    display: block;
+    margin-bottom: 2rem;
+    color: #aaa;
+    transition: all .4s;
+    &:hover {
+      color: $accent-dark;
+    }
+  }
+  &__price {
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    color: #555;
+    svg {
+      margin-right: 1rem;
+      width: 2rem;
+      fill: $contrast;
+    }
+  }
+}

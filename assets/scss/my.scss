@@ -3,6 +3,7 @@
 @import "partials/base";
 @import "blocks/globals/scrollbar.scss";
 @import "blocks/globals/btn";
+@import "blocks/globals/title";
 @import "blocks/admin/admin-layout";
 @import "blocks/admin/admin-sidebar";
 @import "blocks/admin/admin-menu-item";
@@ -30,3 +31,7 @@
 @import "blocks/admin/ui/attribute-component";
 @import "blocks/front/navigation/category-menu";
 @import "blocks/front/navigation/main-header";
+@import "blocks/front/home/home-intro";
+@import "blocks/front/product/product-loop";
+@import "blocks/front/product/last-products";
+@import "blocks/front/product/product-loop-item";

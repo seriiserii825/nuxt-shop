@@ -1,0 +1,8 @@
+.product-loop {
+  display: flex;
+  margin: 0 -2rem;
+  &__item {
+    margin: 0 2rem 8rem;
+    flex-basis: calc(25% - 4rem);
+  }
+}
