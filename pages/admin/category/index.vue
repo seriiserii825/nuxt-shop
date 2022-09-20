@@ -1,16 +1,18 @@
 <template lang="pug">
-AdminForm(label="Categories")
-  .admin-list(v-if="hierarchy && hierarchy.length")
-    .admin-list__item(v-for="item in hierarchy", :key="item.id")
-      .admin-list__parent {{ item.title }}
-      .admin-list__children(
-        v-for="subitem in item.children",
-        :key="subitem.id"
-      )
-        span -- {{ subitem.title }}
-        .admin-list__actions
-          nuxt-link.btn.btn--success(:to="`/admin/category/` + subitem.id") Edit
-          button.btn.btn--danger(@click="deleteItem(subitem.id)") Delete
+  AdminForm(label="Categories")
+    .admin-list(v-if="hierarchy && hierarchy.length")
+      .admin-list__item(v-for="item in hierarchy", :key="item.id")
+        .admin-list__parent
+          span {{ item.title }}
+          span.btn.btn--danger(@click="deleteItem(item.id)") Delete
+        .admin-list__children(
+          v-for="subitem in item.children",
+          :key="subitem.id"
+        )
+          span -- {{ subitem.title }}
+          .admin-list__actions
+            nuxt-link.btn.btn--success(:to="`/admin/category/` + subitem.id") Edit
+            button.btn.btn--danger(@click="deleteItem(subitem.id)") Delete
 </template>
 <script>
 import AdminForm from "@/admin/form/Form.vue";
@@ -48,46 +50,46 @@ export default {
     },
     getData() {
       this.$axios
-        .get("/auth/category")
-        .then((res) => {
-          this.data = res.data.data.reverse();
-          console.log(this.data, "this.data");
-          const parents = this.data.filter((item) => item.parent_id === 0);
-          const children = this.data.map((item) => {
-            if (item.parent_id !== 0) {
-              const parent = this.data.find(
-                (parent) => parent.id === item.parent_id
-              );
+          .get("/auth/category")
+          .then((res) => {
+            this.data = res.data.data.reverse();
+            console.log(this.data, "this.data");
+            const parents = this.data.filter((item) => item.parent_id === 0);
+            const children = this.data.map((item) => {
+              if (item.parent_id !== 0) {
+                const parent = this.data.find(
+                    (parent) => parent.id === item.parent_id
+                );
+                return {
+                  ...item,
+                  parent: parent.title,
+                };
+              } else {
+                return item;
+              }
+            });
+            this.hierarchy = parents.map((parent) => {
               return {
-                ...item,
-                parent: parent.title,
+                ...parent,
+                children: children.filter(
+                    (child) => child.parent_id === parent.id
+                ),
               };
-            } else {
-              return item;
-            }
+            });
+          })
+          .catch((err) => {
+            console.log(err.response, "err.response");
           });
-          this.hierarchy = parents.map((parent) => {
-            return {
-              ...parent,
-              children: children.filter(
-                (child) => child.parent_id === parent.id
-              ),
-            };
-          });
-        })
-        .catch((err) => {
-          console.log(err.response, "err.response");
-        });
     },
     deleteItem(id) {
       this.$axios
-        .delete("/auth/category/" + id)
-        .then(() => {
-          this.getData();
-        })
-        .catch((err) => {
-          console.log(err.response.data.message, "err.response");
-        });
+          .delete("/auth/category/" + id)
+          .then(() => {
+            this.getData();
+          })
+          .catch((err) => {
+            console.log(err.response.data.message, "err.response");
+          });
     },
   },
   created() {

@@ -3,13 +3,16 @@
     margin-bottom: 3rem;
   }
   &__parent,
-  &__children{
+  &__children {
     margin-bottom: 0.4rem;
     padding: 1rem 2rem;
     border: 1px solid #ccc;
-    box-shadow: 0 3px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
   }
   &__parent {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
     color: white;
     background-color: #666;
   }
