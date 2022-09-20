@@ -1,0 +1,20 @@
+.product-gallery {
+  &__img {
+    margin-bottom: 1rem;
+  }
+  &__wrap {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -0.5rem;
+  }
+  &__item {
+    margin: 0 0.5rem;
+    flex-basis: calc(25% - 1rem);
+    cursor: pointer;
+    opacity: 0.6;
+    transition: all .4s;
+    &.active {
+      opacity: 1;
+    }
+  }
+}
