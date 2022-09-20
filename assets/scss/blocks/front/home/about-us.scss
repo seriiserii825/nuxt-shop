@@ -1,0 +1,22 @@
+.about-us {
+  margin-bottom: 10rem;
+  .title {
+    margin-bottom: 4rem;
+  }
+  &__wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border: 1px solid #e4e4e4;
+  }
+  &__img,
+  &__content {
+    width: 48%;
+  }
+  &__content {
+    padding: 8rem 0;
+    font-size: 2rem;
+    line-height: 1.5;
+    background: #f2f2f2;
+  }
+}
