@@ -3,7 +3,7 @@
     <div class="main-header">
       <ul class="category-menu" v-if="categories.length">
         <li v-for="item in categories" :key="item.id">
-          <nuxt-link :to="`/category/${item.id}`">{{ item.title }}</nuxt-link>
+          <span>{{ item.title }}</span>
           <ul class="category-menu__sub" v-if="item.children.length">
             <li v-for="child in item.children" :key="child.id">
               <nuxt-link :to="`/category/${child.id}`">{{

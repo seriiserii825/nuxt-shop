@@ -1,8 +1,14 @@
 .product-loop {
   display: flex;
+  flex-wrap: wrap;
   margin: 0 -2rem;
+  &.product-loop--3 {
+    .product-loop__item {
+      flex-basis: calc(33.33% - 4rem);
+    }
+  }
   &__item {
-    margin: 0 2rem 8rem;
+    margin: 0 2rem 4rem;
     flex-basis: calc(25% - 4rem);
   }
 }

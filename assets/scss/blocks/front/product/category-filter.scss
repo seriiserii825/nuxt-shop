@@ -1,0 +1,20 @@
+.category-filter {
+  &__item {
+    margin-bottom: 4rem;
+    border: 1px solid #ccc;
+  }
+  &__title {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    color: white;
+    background-color: #ccc;
+  }
+  ul {
+    padding: 2rem;
+    li {
+      margin-bottom: 1rem;
+      cursor: pointer;
+    }
+  }
+}
