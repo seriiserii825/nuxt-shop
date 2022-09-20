@@ -5,7 +5,11 @@ export const state = () => ({
     isVisibleNotify: false,
     notifyMessage: "",
     user: {},
-    role: ''
+    role: '',
+    cart: {
+        items: [],
+        total: 0
+    }
 });
 
 export const mutations = {
@@ -33,6 +37,9 @@ export const mutations = {
     },
     setIsVisibleAddMedia(state, payload) {
         state.isVisibleAddMedia = payload;
+    },
+    setCart(state, payload) {
+        state.cart = payload;
     }
 };
 
@@ -46,4 +53,7 @@ export const actions = {
     hideAdminMedia({commit}) {
         commit("hideAdminMedia");
     },
+    setCart({commit}, payload) {
+        commit("setCart", payload);
+    }
 };
