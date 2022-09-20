@@ -1,12 +1,13 @@
 .about-us {
   margin-bottom: 10rem;
+  padding: 8rem 0 0;
   .title {
     margin-bottom: 4rem;
   }
   &__wrap {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: stretch;
     border: 1px solid #e4e4e4;
   }
   &__img,
@@ -14,7 +15,7 @@
     width: 48%;
   }
   &__content {
-    padding: 8rem 0;
+    padding: 4rem 0;
     font-size: 2rem;
     line-height: 1.5;
     background: #f2f2f2;

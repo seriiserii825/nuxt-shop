@@ -7,8 +7,9 @@
           <ul class="category-menu__sub" v-if="item.children.length">
             <li v-for="child in item.children" :key="child.id">
               <nuxt-link :to="`/category/${child.id}`">{{
-                child.title
-              }}</nuxt-link>
+                  child.title
+                }}
+              </nuxt-link>
             </li>
           </ul>
         </li>
@@ -38,6 +39,61 @@
       </ul>
     </div>
     <Nuxt/>
+    <div class="main-footer">
+      <div class="container">
+        <div class="main-footer__wrap">
+          <div class="main-footer__item">
+            <h3 class="main-footer__title">Follow Us</h3>
+            <ul class="main-footer__social">
+              <li>
+                <a href="#">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path
+                        d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/>
+                  </svg>
+                  <span>Facebook</span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path
+                        d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/>
+                  </svg>
+                  <span>Twitter</span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path
+                        d="M256,8C119.1,8,8,119.1,8,256S119.1,504,256,504,504,392.9,504,256,392.9,8,256,8ZM185.3,380a124,124,0,0,1,0-248c31.3,0,60.1,11,83,32.3l-33.6,32.6c-13.2-12.9-31.3-19.1-49.4-19.1-42.9,0-77.2,35.5-77.2,78.1S142.3,334,185.3,334c32.6,0,64.9-19.1,70.1-53.3H185.3V238.1H302.2a109.2,109.2,0,0,1,1.9,20.7c0,70.8-47.5,121.2-118.8,121.2ZM415.5,273.8v35.5H380V273.8H344.5V238.3H380V202.8h35.5v35.5h35.2v35.5Z"/>
+                  </svg>
+                  <span>Google+</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="main-footer__item">
+            <h2 class="main-footer__title">Store Information</h2>
+            <ul class="main-footer__info">
+              <li>
+                <i class="icon icon-location"></i>
+                <span>Address: 123 Main Street, Anytown, CA 12345 – USA</span>
+              </li>
+              <li>
+                <i class="icon icon-phone"></i>
+                <span>Phone: (800) 123 1234</span>
+              </li>
+              <li>
+                <i class="icon icon-email"></i>
+                <span>Email: <a href="mailto:some@mail.ru">shop@.mail.com</a></span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -52,7 +108,7 @@ export default {
       categories: [],
     };
   },
-  components: { AdminSidebar, AdminHeader, AddMedia, Notify },
+  components: {AdminSidebar, AdminHeader, AddMedia, Notify},
   computed: {
     isVisibleNotify() {
       return this.$store.state.isVisibleNotify;
@@ -74,26 +130,26 @@ export default {
     },
     getCategories() {
       this.$axios
-        .get("/category")
-        .then((res) => {
-          this.categories = res.data.data;
-          const parents = this.categories.filter(
-            (item) => item.parent_id === 0
-          );
-          this.categories = parents.map((item) => {
-            const result = {
-              ...item,
-              children: this.categories.filter(
-                (child) => child.parent_id === item.id
-              ),
-            };
-            return result;
+          .get("/category")
+          .then((res) => {
+            this.categories = res.data.data;
+            const parents = this.categories.filter(
+                (item) => item.parent_id === 0
+            );
+            this.categories = parents.map((item) => {
+              const result = {
+                ...item,
+                children: this.categories.filter(
+                    (child) => child.parent_id === item.id
+                ),
+              };
+              return result;
+            });
+            console.log(this.categories, "this.categories");
+          })
+          .catch((err) => {
+            console.log(err);
           });
-          console.log(this.categories, "this.categories");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
     },
   },
   mounted() {

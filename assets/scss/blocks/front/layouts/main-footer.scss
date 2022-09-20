@@ -1,0 +1,33 @@
+.main-footer {
+  padding: 4rem 0;
+  border-top: 1px solid $accent;
+  &__wrap {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__title {
+    margin-bottom: 4rem;
+    font-size: 3rem;
+    text-transform: uppercase;
+  }
+  &__list {
+  }
+  &__social {
+    li {
+      margin-bottom: 2rem;
+    }
+    a {
+      display: flex;
+      align-items: center;
+      svg {
+        margin-right: 1rem;
+      }
+      span {
+        text-transform: uppercase;
+      }
+    }
+    svg {
+      flex: 0 0 3rem;
+    }
+  }
+}
