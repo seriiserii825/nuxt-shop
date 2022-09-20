@@ -98,6 +98,7 @@ export default {
     this.categories_ids.push(this.id);
     this.getCategories();
     this.getProducts();
+    console.log(this.$store.state.user, 'this.$store.state.user');
   }
 };
 </script>

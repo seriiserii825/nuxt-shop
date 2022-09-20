@@ -24,7 +24,7 @@
         :count="users_count",
         subtitle="Users",
         title="New users",
-        url="/admin/product",
+        url="/admin/user",
         background="#259b64",
         icon="/svg/users.svg"
       )
