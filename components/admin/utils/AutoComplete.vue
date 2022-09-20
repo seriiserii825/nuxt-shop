@@ -38,6 +38,9 @@ export default {
     },
     removeHandler(item) {
       this.selected = this.selected.filter((i) => i.id !== item.id);
+      this.$emit("on-select", this.selected);
+      this.items = this.items.filter((el) => el.id !== item.id);
+      this.show_list = this.items.length > 0;
     },
     hideList() {
       this.show_list = false;

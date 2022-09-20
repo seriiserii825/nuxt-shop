@@ -1,8 +1,8 @@
 <template>
   <div class="product-loop-item">
-    <div class="product-loop-item__img">
+    <nuxt-link :to="`/product/${product.id}`" class="product-loop-item__img">
       <img :src="`${server_url}/${product.img}`" :alt="product.title">
-    </div>
+    </nuxt-link>
     <div class="product-loop-item__content">
       <h3 class="product-loop-item__title">{{ product.title }}</h3>
       <nuxt-link :to="`/product/${product.id}`">Explore now</nuxt-link>
