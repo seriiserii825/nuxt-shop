@@ -38,7 +38,7 @@
           <nuxt-link to="/admin">Admin</nuxt-link>
         </li>
         <li v-if="this.$store.state.role === 'user'">
-          <nuxt-link to="/cabinet">Cabinet</nuxt-link>
+          <nuxt-link to="/cabinet">Cabinet({{ this.$auth.user.user.email }})</nuxt-link>
         </li>
         <li v-if="!this.$store.state.user.name">
           <nuxt-link to="/register">Register</nuxt-link>

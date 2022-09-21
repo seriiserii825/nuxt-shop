@@ -9,6 +9,7 @@
           tr
             th #ID
             th User
+            th User id
             th Status
             th Sum
             th Updated At
@@ -18,6 +19,7 @@
           tr(v-for='item in data', :key='item.id')
             td {{ item.id }}
             td {{ item.user.name }}
+            td {{ item.user.id }}
             td
               span.badge(:class='badgeClass(item)')
                 | {{ orderStatus(item.status) }}
