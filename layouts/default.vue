@@ -94,7 +94,7 @@
         </div>
       </div>
     </div>
-    <Cart/>
+    <Cart v-if="showCart"/>
   </div>
 </template>
 <script>
@@ -118,6 +118,9 @@ export default {
     isVisibleAddMedia() {
       return this.$store.state.isVisibleAddMedia;
     },
+    showCart(){
+      return this.$store.state.show_cart;
+    }
   },
   methods: {
     async logout() {

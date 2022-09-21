@@ -25,8 +25,11 @@
     background: #fff;
     border-radius: 1rem;
     transition: all .6s;
-    transition-delay: 1s;
+    transition-delay: .4s;
     transform: translateY(-100rem);
+    svg {
+      cursor: pointer;
+    }
   }
   &__header {
     display: flex;

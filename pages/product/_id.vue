@@ -40,14 +40,43 @@ export default {
       gallery: [],
       price: null,
       related_products: [],
-      related_ids: []
+      related_ids: [],
+      quantity: 1,
     };
   },
   methods: {
     addToCart() {
+      const cart = this.$store.state.cart;
+      const product = {
+        id: this.product.id,
+        title: this.product.title,
+        price: this.price,
+        quantity: this.quantity,
+        image: this.product.img
+      };
+
+      let cart_items = JSON.parse(JSON.stringify(cart.items));
+
+      if (cart_items.length > 0) {
+        const index = cart_items.findIndex(item => item.id === product.id);
+        if (index !== -1) {
+          cart_items[index].quantity += product.quantity;
+        } else {
+          cart_items.push(product);
+        }
+      } else {
+        cart_items.push(product);
+      }
+
+      const total = cart_items.reduce((total, item) => total + item.price * item.quantity, 0);
+      console.log(total, 'total')
+
+      this.$store.dispatch('setCart', {items: cart_items, total: total});
+      this.$store.dispatch('toggleCart', true);
     },
     changeQuantity(quantity) {
       this.price = this.product.price * quantity;
+      this.quantity = quantity;
     },
     getProduct() {
       this.$axios.get(`/single-product/${this.id}`).then((response) => {
