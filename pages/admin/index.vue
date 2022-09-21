@@ -51,7 +51,8 @@
             tbody
               tr(v-for="item in orders", :key="item.id")
                 td {{ item.id }}
-                td {{ item.user.name }}
+                td
+                  nuxt-link(:to="`/admin/order/${item.id}`") {{ item.user.name }}
                 td
                   span.badge(:class="badgeClass(item.status)") {{ orderStatus(item.status) }}
                 td {{ item.sum }}
@@ -123,7 +124,6 @@ export default {
         });
     },
     orderStatus(status) {
-      console.log(status, "status");
       switch (status) {
         case "0":
           return "New";

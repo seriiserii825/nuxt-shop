@@ -1,5 +1,5 @@
 <template lang="pug">
-  AdminForm(label='Create order')
+  AdminForm(label='Edit order')
     .form__flex
       .form__item
         label.form__label(for='user_id')  User
@@ -28,6 +28,31 @@
         label.form__label Updated at
         div {{updated_at}}
     button.btn(@click='onSubmit') Submit
+
+    .form__orders
+      table.order-table(v-if='items.length > 0')
+        thead
+          tr
+            th Image
+            th Title
+            th Quantity
+            th Price
+        tbody
+          template(v-if='items && items.length > 0')
+            tr(v-for='item in items')
+              td
+                img(width='60', :src='`${server_url}/uploads/${item.image}`', alt='')
+              td {{ item.title }}
+              td {{ item.quantity }}
+              td
+                strong {{ item.price }}$
+            tr
+              td.order-table__total(colspan='3') Total:
+              td.order-table__total
+                strong {{ total }}$
+          template(v-else='')
+            tr
+              td(colspan='5') No items in cart
 </template>
 <script>
 import AdminForm from "@/admin/form/Form";
@@ -41,10 +66,11 @@ export default {
       status: "0",
       note: "",
       sum: "",
+      items: [],
       created_at: "",
       updated_at: "",
       errors: {},
-      users: []
+      users: [],
     };
   },
   methods: {
@@ -67,6 +93,7 @@ export default {
         status: this.status,
         note: this.note,
         sum: this.sum,
+        cart: JSON.stringify(this.items),
       };
 
       this.$axios
@@ -84,19 +111,18 @@ export default {
       this.$axios
           .get("/auth/order/" + this.id)
           .then((res) => {
-            const {user_id, status, note, sum, created_at, updated_at} = res.data.data;
+            const {user_id, status, note, sum, created_at, updated_at, cart} = res.data.data;
             this.user_id = user_id;
             this.status = status;
             this.note = note;
             this.sum = sum;
             this.created_at = created_at;
             this.updated_at = updated_at;
+            this.items = JSON.parse(cart);
+            console.log(this.items, 'this.items')
           })
           .catch((err) => {
             console.log(err, 'err')
-            if (err.response.data && err.response.data.errors) {
-              setErrors(err.response.data.errors);
-            }
           });
     },
     getUsers() {
@@ -111,6 +137,18 @@ export default {
             }
           });
     },
+  },
+  computed: {
+    server_url() {
+      return this.$store.state.server_url;
+    },
+    total() {
+      let total = 0;
+      this.items.forEach(item => {
+        total += parseInt(item.price) * item.quantity;
+      })
+      return total;
+    }
   },
   components: {
     AdminForm,

@@ -1,0 +1,33 @@
+.order-list {
+  padding: 8rem 0;
+  &__item {
+    margin-bottom: 4rem;
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+  ul {
+    margin-bottom: 3rem;
+  }
+  &__title {
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+  }
+  input[type="text"],
+  input[type="email"],
+  input[type="number"],
+  textarea {
+    width: 100%;
+    text-indent: 1rem;
+    border: 1px solid #ccc;
+  }
+  input[type="text"],
+  input[type="email"],
+  input[type="number"] {
+    height: 4rem;
+  }
+  textarea {
+    padding-top: 1rem;
+    height: 8rem;
+  }
+}
