@@ -9,7 +9,8 @@ export const state = () => ({
     cart: {
         items: [],
         total: 0
-    }
+    },
+    show_cart: false,
 });
 
 export const mutations = {
@@ -40,6 +41,9 @@ export const mutations = {
     },
     setCart(state, payload) {
         state.cart = payload;
+    },
+    toggleCart: (state, payload) => {
+        state.show_cart = payload;
     }
 };
 
@@ -55,5 +59,8 @@ export const actions = {
     },
     setCart({commit}, payload) {
         commit("setCart", payload);
+    },
+    toggleCart({commit}, payload) {
+        commit("toggleCart", payload);
     }
 };
