@@ -54,8 +54,8 @@
           <strong>Total:</strong>
           <strong>{{ total }}$</strong>
         </div>
-        <div class="cart__actions">
-          <button class="btn btn--success">Order</button>
+        <div class="cart__actions" v-if="total && total > 0">
+          <button @click="goToOrder" class="btn btn--success">Order</button>
           <button class="btn btn--danger" @click="clearCart">Clear Cart</button>
         </div>
       </footer>
@@ -71,8 +71,12 @@ export default {
     }
   },
   methods: {
+    goToOrder() {
+      this.closeCart();
+      this.$router.push('/order');
+    },
     clearCart() {
-      this.$store.dispatch('setCart', {items: [], total: 0});
+      this.$store.dispatch('setCart', {items: [], total: 0, quantity: 0});
       this.getCart();
     },
     closeCart() {

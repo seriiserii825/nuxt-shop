@@ -69,9 +69,9 @@ export default {
       }
 
       const total = cart_items.reduce((total, item) => total + item.price * item.quantity, 0);
-      console.log(total, 'total')
+      const total_quantity = cart_items.reduce((total, item) => total + item.quantity, 0);
 
-      this.$store.dispatch('setCart', {items: cart_items, total: total});
+      this.$store.dispatch('setCart', {items: cart_items, total: total, quantity: total_quantity});
       this.$store.dispatch('toggleCart', true);
     },
     changeQuantity(quantity) {

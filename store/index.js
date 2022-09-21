@@ -8,6 +8,7 @@ export const state = () => ({
     role: '',
     cart: {
         items: [],
+        quantity: 0,
         total: 0
     },
     show_cart: false,

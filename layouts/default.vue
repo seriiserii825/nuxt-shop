@@ -14,6 +14,16 @@
           </ul>
         </li>
       </ul>
+      <div class="cart-icon" @click="openCart">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20px" height="18px"
+             viewBox="0 0 20 18" version="1.1">
+          <g id="surface1">
+            <path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;"
+                  d="M 0.832031 0 C 0.371094 0 0 0.375 0 0.84375 C 0 1.3125 0.371094 1.6875 0.832031 1.6875 L 2.640625 1.6875 L 4.734375 12.8125 C 4.8125 13.210938 5.15625 13.5 5.554688 13.5 L 16.945312 13.5 C 17.40625 13.5 17.777344 13.125 17.777344 12.65625 C 17.777344 12.1875 17.40625 11.8125 16.945312 11.8125 L 6.246094 11.8125 L 5.929688 10.125 L 16.9375 10.125 C 17.433594 10.125 17.871094 9.789062 18.007812 9.304688 L 19.882812 2.554688 C 20.078125 1.839844 19.546875 1.125 18.8125 1.125 L 4.234375 1.125 L 4.152344 0.6875 C 4.078125 0.289062 3.734375 0 3.332031 0 Z M 6.109375 18 C 7.03125 18 7.777344 17.242188 7.777344 16.3125 C 7.777344 15.382812 7.03125 14.625 6.109375 14.625 C 5.191406 14.625 4.445312 15.382812 4.445312 16.3125 C 4.445312 17.242188 5.191406 18 6.109375 18 Z M 17.777344 16.3125 C 17.777344 15.382812 17.03125 14.625 16.109375 14.625 C 15.191406 14.625 14.445312 15.382812 14.445312 16.3125 C 14.445312 17.242188 15.191406 18 16.109375 18 C 17.03125 18 17.777344 17.242188 17.777344 16.3125 Z M 17.777344 16.3125 "/>
+          </g>
+        </svg>
+        <span>{{ total_quantity }}</span>
+      </div>
       <ul class="default__menu menu-default">
         <li>
           <nuxt-link to="/">Home</nuxt-link>
@@ -118,14 +128,20 @@ export default {
     isVisibleAddMedia() {
       return this.$store.state.isVisibleAddMedia;
     },
-    showCart(){
+    showCart() {
       return this.$store.state.show_cart;
+    },
+    total_quantity(){
+      return this.$store.state.cart.quantity;
     }
   },
   methods: {
     async logout() {
       await this.$auth.logout();
       this.$router.push("/login");
+    },
+    openCart(){
+      this.$store.dispatch('toggleCart', true);
     },
     getCategories() {
       this.$axios

@@ -1,0 +1,23 @@
+.order-table {
+  width: 100%;
+  border-collapse: collapse;
+  tr {
+    &:last-of-type {
+      td {
+        &:first-of-type {
+          text-align: left;
+        }
+      }
+    }
+  }
+  th,
+  td {
+    padding: 2rem;
+    border: 1px solid #e5e5e5;
+    text-align: center;
+  }
+  th {
+    color: white;
+    background: #555;
+  }
+}
