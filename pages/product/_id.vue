@@ -88,7 +88,7 @@ export default {
         });
         this.getRelatedProducts();
 
-        this.gallery.push('/uploads/' + this.product.img);
+        this.gallery.push(this.product.img);
         const gallery = this.product.gallery ? JSON.parse(this.product.gallery) : [];
         if (gallery.length > 0) {
           this.gallery = [...this.gallery, ...gallery];

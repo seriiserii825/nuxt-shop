@@ -15,7 +15,7 @@
         <template v-if="items && items.length > 0">
           <tr v-for="item in items">
             <td>
-              <img width="60" :src="`${server_url}/uploads/${item.image}`" alt="">
+              <img width="60" :src="`${server_url}${item.image}`" alt="">
             </td>
             <td>{{ item.title }}</td>
             <td>{{ item.quantity }}</td>

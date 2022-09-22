@@ -27,9 +27,9 @@
             </thead>
             <tbody>
             <template>
-              <tr v-for="item in order.items">
+              <tr v-for="item in order.items" :key="item.id">
                 <td>
-                  <img width="60" :src="`${server_url}/uploads/${item.image}`" alt="">
+                  <img width="60" :src="`${server_url}${item.image}`" alt="">
                 </td>
                 <td>{{ item.title }}</td>
                 <td>{{ item.quantity }}</td>
