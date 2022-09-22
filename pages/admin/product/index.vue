@@ -15,7 +15,7 @@ AdminForm(label="Products")
         tr(v-for="item in data", :key="item.id")
           td {{ item.id }}
           td 
-            img(:src="`${server_url}/uploads/${item.img}`", alt="img", width="100")
+            img(:src="`${server_url}${item.img}`", alt="img", width="100")
           td {{ item.title }}
           td {{ item.category }}
           td {{ item.price }}

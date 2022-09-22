@@ -55,6 +55,7 @@ export default {
         this.$emit("on-gallery", this.images);
         this.$emit("on-close");
       } else {
+          console.log(this.images, "this.images");
         this.$emit("on-images", this.images);
         this.$emit("on-close");
       }

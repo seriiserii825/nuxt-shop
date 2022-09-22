@@ -52,6 +52,7 @@ export default {
       delete this.result[title];
     },
     changeHandler(data) {
+      console.log(this.values, "this.values");
       this.result[data.title] = data.value;
       this.$emit("on-change", this.result);
     },
@@ -64,7 +65,8 @@ export default {
       });
     },
   },
-  created() {
+  mounted() {
+    console.log(this.attrs, "this.attrs");
     this.getAttributes();
   },
 };
