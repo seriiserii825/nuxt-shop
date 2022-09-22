@@ -19,8 +19,8 @@
           input(
             type="radio",
             :id="value.id",
-            :name="value.title",
             :value="value.id",
+            :name="item.title",
             v-model="values[item.title]",
             @change="changeHandler({ title: item.title, value: value.id })"
           )
@@ -52,7 +52,6 @@ export default {
       delete this.result[title];
     },
     changeHandler(data) {
-      console.log(this.values, "this.values");
       this.result[data.title] = data.value;
       this.$emit("on-change", this.result);
     },
